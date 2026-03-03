@@ -424,7 +424,7 @@ Step outside to enjoy breathtaking water views, expansive green space, and the p
   images: IMAGES_30WW,
   heroImage: "/30 Wellers Way Images/1-30-wellers-1-front-of-house.jpg",
   galleryFeatured: [0, 3, 9, 21, 36],
-  youtubeVideoId: "IHyXb7Thkt0",
+  youtubeVideoId: "qnEAwQUYp8g",
   agents: SHARED_AGENTS,
   googleMapsUrl: "https://www.google.com/maps/search/30+Wellers+Way,+Quinte+West,+Ontario+K0K+1L0",
 };
