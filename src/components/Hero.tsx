@@ -63,7 +63,7 @@ export default function Hero() {
                 href="#gallery"
                 className="inline-flex items-center gap-2 px-7 py-3.5 bg-white/15 backdrop-blur-sm hover:bg-white/25 text-white font-medium rounded-lg transition-colors border border-white/30 text-sm sm:text-base"
               >
-                View 49 Photos
+                View All Photos
               </a>
             </div>
           </div>

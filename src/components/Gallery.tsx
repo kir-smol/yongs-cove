@@ -47,7 +47,7 @@ export default function Gallery() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Property Gallery</h2>
-          <p className="mt-2 text-muted">49 professional photos — interior, exterior, aerial &amp; twilight</p>
+          <p className="mt-2 text-muted">Professional photos — staged interior, exterior, aerial views</p>
         </div>
 
         {/* Featured grid */}
