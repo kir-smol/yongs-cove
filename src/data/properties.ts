@@ -280,42 +280,53 @@ A rare offering in a highly desirable community close to Prince Edward County �
    ═══════════════════════════════════════════════════════════ */
 
 const IMAGES_30WW: PropertyImage[] = [
-  // Re-using images until property-specific photos are available
   // Exterior
-  { src: "/images/25-front-of-house-hero.jpg", alt: "Front exterior at sunset — brick and stone bungaloft", category: "exterior" },
-  { src: "/images/1-front-of-house.jpg", alt: "Front exterior — winter twilight with warm lighting", category: "exterior" },
-  { src: "/images/23-front.jpg", alt: "Front exterior — daytime winter view, brick and stone", category: "exterior" },
-  { src: "/images/22-backyard.jpg", alt: "Rear exterior at twilight — large windows, water views", category: "exterior" },
+  { src: "/30 Wellers Way Images/1-30-wellers-1-front-of-house.jpg", alt: "Aerial front exterior at sunset — brick and stone bungaloft with triple garage, Lake Ontario behind", category: "exterior" },
+  { src: "/30 Wellers Way Images/2-30-wellers-2-front-of-house.jpg", alt: "Front exterior at twilight — brick and stone façade with triple garage and lake views", category: "exterior" },
+  { src: "/30 Wellers Way Images/3-30-wellers-3-front-of-house.jpg", alt: "Close-up front exterior — covered porch, stone accents, warm lighting at dusk", category: "exterior" },
   // Great room & living
-  { src: "/images/1-interior.jpg", alt: "Great room — soaring ceilings, fireplace, oak staircase", category: "living" },
-  { src: "/images/2-interior.jpg", alt: "Great room — open concept living area", category: "living" },
-  { src: "/images/3-interior.jpg", alt: "Great room — staircase and fireplace view", category: "living" },
-  { src: "/images/4-interior.jpg", alt: "Living area — natural light and hardwood floors", category: "living" },
-  { src: "/images/5-interior.jpg", alt: "Open concept — living to kitchen flow", category: "living" },
-  { src: "/images/6-interior.jpg", alt: "Living and dining area overview", category: "living" },
-  { src: "/images/7-interior.jpg", alt: "Interior detail — main floor", category: "interior" },
+  { src: "/30 Wellers Way Images/4-30-wellers-interior-1.jpg", alt: "Open-concept great room — soaring double-height ceilings, loft above, kitchen island with stools", category: "living" },
+  { src: "/30 Wellers Way Images/5-30-wellers-interior-2.jpg", alt: "Great room — staged living area with hardwood floors and expansive windows", category: "living" },
+  { src: "/30 Wellers Way Images/6-30-wellers-interior-3.jpg", alt: "Great room wide view — loft balcony, kitchen, dining area, glass pendant lights", category: "living" },
+  { src: "/30 Wellers Way Images/7-30-wellers-interior-4.jpg", alt: "Living area — cozy staged seating with views to kitchen and upper loft", category: "living" },
+  { src: "/30 Wellers Way Images/8-30-wellers-interior-5.jpg", alt: "Living room — gas fireplace with white mantel, two sofas, mounted TV, vaulted ceiling", category: "living" },
+  { src: "/30 Wellers Way Images/9-30-wellers-interior-6.jpg", alt: "Great room — alternate angle showing fireplace and large windows with water views", category: "living" },
   // Kitchen & dining
-  { src: "/images/8-interior-kitchen.jpg", alt: "Gourmet kitchen — high-end appliances, custom cabinetry, island", category: "kitchen" },
-  { src: "/images/9-interior-dining-area.jpg", alt: "Kitchen and dining — open concept", category: "kitchen" },
-  { src: "/images/10-interior-dining-area.jpg", alt: "Dining area — elegant staging", category: "kitchen" },
-  { src: "/images/11-interior-dining-area.jpg", alt: "Dining area — view towards kitchen", category: "kitchen" },
-  { src: "/images/12-interior-dining-area.jpg", alt: "Dining and kitchen — expansive windows", category: "kitchen" },
-  // Primary suite
-  { src: "/images/13-master-bedroom.jpg", alt: "Primary bedroom — spa-inspired ensuite, walk-in closet", category: "bedroom" },
-  { src: "/images/14-master-bedroom.jpg", alt: "Primary bedroom — spacious layout with ensuite access", category: "bedroom" },
-  { src: "/images/15-master-bath.jpg", alt: "Primary ensuite — dual vanity, quartz counters", category: "bathroom" },
-  // Bedrooms
-  { src: "/images/16-bedroom-1.jpg", alt: "Bedroom 2 — main floor", category: "bedroom" },
-  { src: "/images/19-bedroom-2.jpg", alt: "Bedroom 4 — upper level", category: "bedroom" },
-  { src: "/images/20-bedroom-3.jpg", alt: "Bedroom 5 — upper level", category: "bedroom" },
-  { src: "/images/21-bedroom-3.jpg", alt: "Bedroom 5 — alternate angle", category: "bedroom" },
+  { src: "/30 Wellers Way Images/10-30-wellers-interior-7.jpg", alt: "Gourmet kitchen — quartz island with green stools, pendant lights, stainless appliances", category: "kitchen" },
+  { src: "/30 Wellers Way Images/11-30-wellers-interior-8.jpg", alt: "Kitchen — custom cabinetry, glass-front uppers, island with seating", category: "kitchen" },
+  { src: "/30 Wellers Way Images/12-30-wellers-interior-9.jpg", alt: "Kitchen — range hood, appliance wall, built-in cabinetry and pantry storage", category: "kitchen" },
+  { src: "/30 Wellers Way Images/13-30-wellers-interior-10.jpg", alt: "Kitchen — wide angle showing custom cabinetry, island, and open concept to living", category: "kitchen" },
+  { src: "/30 Wellers Way Images/14-30-wellers-interior-11.jpg", alt: "Kitchen detail — countertops, appliances, and glass-front display cabinets", category: "kitchen" },
+  { src: "/30 Wellers Way Images/15-30-wellers-interior-12.jpg", alt: "Kitchen — island with bar stools, sliding doors to rear deck with countryside views", category: "kitchen" },
+  { src: "/30 Wellers Way Images/16-30-wellers-interior-13.jpg", alt: "Kitchen and eating area — pendant lights, stainless appliances, hardwood flooring", category: "kitchen" },
+  { src: "/30 Wellers Way Images/17-30-wellers-interior-14.jpg", alt: "Kitchen panoramic — full island, tall cabinetry, open to living room with fireplace", category: "kitchen" },
+  { src: "/30 Wellers Way Images/18-30-wellers-interior-15.jpg", alt: "Main floor hallway and entryway — hardwood floors, elegant finishes", category: "interior" },
+  // Dining & staircase
+  { src: "/30 Wellers Way Images/19-30-wellers-interior-16.jpg", alt: "Dining area — farmhouse table, staircase to loft, double-height windows with water views", category: "living" },
   // Upper level / Loft
-  { src: "/images/17-upper-floor.jpg", alt: "Upper level loft — flexible living space", category: "upper" },
-  { src: "/images/18-upper-floor.jpg", alt: "Upper level loft — overlooking great room", category: "upper" },
+  { src: "/30 Wellers Way Images/20-30-wellers-interior-17.jpg", alt: "Upper level loft — sectional sofa with ottoman, iron and oak railing, sunset lake views", category: "upper" },
+  { src: "/30 Wellers Way Images/21-30-wellers-interior-18.jpg", alt: "Upper level loft — wider angle, overlooking great room, water art on walls", category: "upper" },
+  // Primary suite
+  { src: "/30 Wellers Way Images/22-30-wellers-master-bedroom.jpg", alt: "Primary bedroom — tray ceiling, ensuite access, hardwood floors, water views at dusk", category: "bedroom" },
+  { src: "/30 Wellers Way Images/23-30-wellers-master-bedroom.jpg", alt: "Primary bedroom — alternate angle, bedside lamps, serene styling", category: "bedroom" },
+  { src: "/30 Wellers Way Images/24-30-wellers-bathroom.jpg", alt: "Primary ensuite — dual vanity, quartz counters, marble floor, glass walk-in shower", category: "bathroom" },
+  { src: "/30 Wellers Way Images/25-30-wellers-master-bedroom.jpg", alt: "Primary bedroom — wide view with ensuite door, art and window views", category: "bedroom" },
+  { src: "/30 Wellers Way Images/26-30-wellers-bathroom.jpg", alt: "Primary ensuite — freestanding tub, marble tile, elegant lighting", category: "bathroom" },
+  // Bedrooms
+  { src: "/30 Wellers Way Images/27-30-wellers-bedroom.jpg", alt: "Bedroom 2 — main floor, green accents, countryside window views", category: "bedroom" },
+  { src: "/30 Wellers Way Images/28-30-wellers-bedroom.jpg", alt: "Bedroom 2 — alternate angle with nightstands and warm lighting", category: "bedroom" },
+  { src: "/30 Wellers Way Images/29-30-wellers-bedroom.jpg", alt: "Bedroom 3 — main floor, staged with neutral tones, large window", category: "bedroom" },
+  { src: "/30 Wellers Way Images/30-30-wellers-bedroom.jpg", alt: "Bedroom 3 — alternate angle showing closet and window views", category: "bedroom" },
+  { src: "/30 Wellers Way Images/31-30-wellers-bedroom.jpg", alt: "Bedroom 4 — upper level, hardwood floors, window with water views", category: "bedroom" },
+  { src: "/30 Wellers Way Images/32-30-wellers-bedroom.jpg", alt: "Bedroom 4 — alternate angle, spacious layout", category: "bedroom" },
+  { src: "/30 Wellers Way Images/33-30-wellers-bedroom.jpg", alt: "Bedroom 5 — upper level, staged with modern décor", category: "bedroom" },
+  { src: "/30 Wellers Way Images/34-30-wellers-bedroom.jpg", alt: "Bedroom 5 — alternate angle with window views", category: "bedroom" },
   // Bathrooms
-  { src: "/images/19-bathroom-2.jpg", alt: "Upper level bathroom", category: "bathroom" },
-  // Aerial
-  { src: "/images/24-arial.jpg", alt: "Aerial — Young's Cove community with Lake Ontario", category: "aerial" },
+  { src: "/30 Wellers Way Images/35-30-wellers-bathroom.jpg", alt: "Bathroom — dark tile tub/shower combo, glass door, modern vanity", category: "bathroom" },
+  { src: "/30 Wellers Way Images/36-30-wellers-bathroom.jpg", alt: "Laundry room — front-load GE washer and dryer, utility sink, white cabinetry", category: "interior" },
+  // Backyard
+  { src: "/30 Wellers Way Images/37-30-wellers-backyard.jpg", alt: "Backyard at twilight — Adirondack chairs around fire pit, brick exterior, expansive lawn", category: "exterior" },
+  { src: "/30 Wellers Way Images/38-30-wellers-backyard.jpg", alt: "Aerial rear exterior at sunset — deck, fire pit seating area, estate-sized yard", category: "exterior" },
 ];
 
 const LISTING_30WW: PropertyListing = {
@@ -411,8 +422,8 @@ Step outside to enjoy breathtaking water views, expansive green space, and the p
     "Minutes from Prince Edward County — wineries, fine dining, beaches",
   ],
   images: IMAGES_30WW,
-  heroImage: "/images/25-front-of-house-hero.jpg",
-  galleryFeatured: [0, 4, 11, 16, 26],
+  heroImage: "/30 Wellers Way Images/1-30-wellers-1-front-of-house.jpg",
+  galleryFeatured: [0, 3, 9, 21, 36],
   youtubeVideoId: "IHyXb7Thkt0",
   agents: SHARED_AGENTS,
   googleMapsUrl: "https://www.google.com/maps/search/30+Wellers+Way,+Quinte+West,+Ontario+K0K+1L0",
