@@ -1,8 +1,8 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import VideoSection from "@/components/VideoSection";
 import Gallery from "@/components/Gallery";
 import PropertyDetails from "@/components/PropertyDetails";
-import VideoSection from "@/components/VideoSection";
 import AgentCards from "@/components/AgentCards";
 import LeadForm from "@/components/LeadForm";
 import Footer from "@/components/Footer";
@@ -13,9 +13,9 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        <VideoSection />
         <Gallery />
         <PropertyDetails />
-        <VideoSection />
         <AgentCards />
         <LeadForm />
       </main>

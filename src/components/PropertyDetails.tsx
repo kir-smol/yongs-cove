@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { PROPERTY, LISTING_DESCRIPTION, ROOMS } from "@/data/property";
 
 const FEATURES = [
@@ -6,7 +9,7 @@ const FEATURES = [
   { icon: "area", label: "Square Footage", value: PROPERTY.livingArea },
   { icon: "lot", label: "Lot Size", value: PROPERTY.lotSize },
   { icon: "year", label: "Built", value: PROPERTY.yearBuilt },
-  { icon: "parking", label: "Parking", value: `${PROPERTY.totalParkingSpaces} Spaces` },
+  { icon: "parking", label: "Garage", value: "3-Car Garage" },
 ];
 
 const HIGHLIGHTS = [
@@ -57,7 +60,7 @@ function FeatureIcon({ type }: { type: string }) {
     ),
     parking: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6.5 17.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm11 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM4 15.5h-.5a1 1 0 01-1-1v-3a1 1 0 011-1h1l2-3.5h7l2.5 3.5h2.5a1 1 0 011 1v3a1 1 0 01-1 1H20M8 15.5h8" />
       </svg>
     ),
   };
@@ -65,6 +68,7 @@ function FeatureIcon({ type }: { type: string }) {
 }
 
 export default function PropertyDetails() {
+  const [metric, setMetric] = useState(false);
   const paragraphs = LISTING_DESCRIPTION.split("\n\n");
   const mainRooms = ROOMS.filter((r) => r.level === "Main Level");
   const upperRooms = ROOMS.filter((r) => r.level === "Upper Level");
@@ -90,7 +94,27 @@ export default function PropertyDetails() {
 
             {/* Room dimensions */}
             <div className="mt-10">
-              <h3 className="text-lg font-semibold text-foreground mb-4">Room Dimensions</h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-foreground">Room Dimensions</h3>
+                <div className="flex items-center bg-surface-warm rounded-lg p-0.5">
+                  <button
+                    onClick={() => setMetric(false)}
+                    className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                      !metric ? "bg-white text-foreground shadow-sm" : "text-muted hover:text-foreground"
+                    }`}
+                  >
+                    Imperial
+                  </button>
+                  <button
+                    onClick={() => setMetric(true)}
+                    className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                      metric ? "bg-white text-foreground shadow-sm" : "text-muted hover:text-foreground"
+                    }`}
+                  >
+                    Metric
+                  </button>
+                </div>
+              </div>
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <h4 className="text-sm font-semibold text-primary mb-3 uppercase tracking-wider">Main Level</h4>
@@ -98,7 +122,7 @@ export default function PropertyDetails() {
                     {mainRooms.map((r) => (
                       <div key={r.name} className="flex justify-between py-2 border-b border-border/50">
                         <span className="text-sm text-foreground">{r.name}</span>
-                        <span className="text-sm text-muted">{r.imperial}</span>
+                        <span className="text-sm text-muted">{metric ? r.dimensions : r.imperial}</span>
                       </div>
                     ))}
                   </div>
@@ -109,7 +133,7 @@ export default function PropertyDetails() {
                     {upperRooms.map((r) => (
                       <div key={r.name} className="flex justify-between py-2 border-b border-border/50">
                         <span className="text-sm text-foreground">{r.name}</span>
-                        <span className="text-sm text-muted">{r.imperial}</span>
+                        <span className="text-sm text-muted">{metric ? r.dimensions : r.imperial}</span>
                       </div>
                     ))}
                   </div>

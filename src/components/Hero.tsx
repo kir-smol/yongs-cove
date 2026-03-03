@@ -9,6 +9,12 @@ const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/YD38zkcytSUF9ZfLA";
 export default function Hero() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [heroIdx, setHeroIdx] = useState(0);
+
+  const openGalleryModal = () => {
+    setActiveIndex(0);
+    setLightboxOpen(true);
+  };
 
   const openLightbox = (index: number) => {
     const realIdx = IMAGES.findIndex((img) => img.src === GALLERY_FEATURED[index]?.src);
@@ -18,6 +24,10 @@ export default function Hero() {
 
   const navigate = useCallback((dir: number) => {
     setActiveIndex((prev) => (prev + dir + IMAGES.length) % IMAGES.length);
+  }, []);
+
+  const navigateHero = useCallback((dir: number) => {
+    setHeroIdx((prev) => (prev + dir + IMAGES.length) % IMAGES.length);
   }, []);
 
   useEffect(() => {
@@ -77,24 +87,53 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Image gallery grid — realtor.ca style: 1 large + 4 thumbs */}
+        {/* Image gallery grid */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-0">
           <div className="grid grid-cols-1 sm:grid-cols-4 sm:grid-rows-2 gap-1.5 rounded-xl overflow-hidden" style={{ height: "clamp(300px, 50vh, 520px)" }}>
-            {/* Main hero image */}
-            <button
-              onClick={() => openLightbox(0)}
-              className="relative sm:col-span-2 sm:row-span-2 overflow-hidden group cursor-pointer"
-            >
-              <Image
-                src={GALLERY_FEATURED[0].src}
-                alt={GALLERY_FEATURED[0].alt}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                sizes="(max-width: 640px) 100vw, 50vw"
-                priority
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-            </button>
+            {/* Main hero image with arrows */}
+            <div className="relative sm:col-span-2 sm:row-span-2 overflow-hidden group">
+              <button onClick={openGalleryModal} className="absolute inset-0 z-10 cursor-pointer">
+                <Image
+                  src={IMAGES[heroIdx].src}
+                  alt={IMAGES[heroIdx].alt}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                  priority
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+              </button>
+
+              {/* Left arrow */}
+              <button
+                onClick={(e) => { e.stopPropagation(); navigateHero(-1); }}
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-9 h-9 bg-white/80 hover:bg-white rounded-full flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
+                aria-label="Previous photo"
+              >
+                <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              {/* Right arrow */}
+              <button
+                onClick={(e) => { e.stopPropagation(); navigateHero(1); }}
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-9 h-9 bg-white/80 hover:bg-white rounded-full flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
+                aria-label="Next photo"
+              >
+                <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+
+              {/* Photo counter */}
+              <span className="absolute bottom-3 right-3 z-20 inline-flex items-center gap-1.5 px-3 py-1.5 bg-black/70 backdrop-blur-sm text-white text-xs font-medium rounded-lg pointer-events-none">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                {heroIdx + 1} / {IMAGES.length}
+              </span>
+            </div>
 
             {/* 4 thumbnail images */}
             {GALLERY_FEATURED.slice(1, 5).map((img, i) => (
@@ -120,17 +159,6 @@ export default function Hero() {
                 )}
               </button>
             ))}
-
-            {/* Mobile: show photo count overlay */}
-            <button
-              onClick={() => openLightbox(0)}
-              className="absolute bottom-4 right-4 sm:hidden inline-flex items-center gap-2 px-3 py-1.5 bg-black/70 backdrop-blur-sm text-white text-xs font-medium rounded-lg"
-            >
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              {IMAGES.length} photos
-            </button>
           </div>
         </div>
 
@@ -149,7 +177,7 @@ export default function Hero() {
               </div>
 
               <p className="mt-2 text-sm text-muted">
-                {PROPERTY.builder} &middot; {PROPERTY.locationDescription}
+                {PROPERTY.builder} &middot; Prince Edward County
               </p>
 
               {/* Specs row */}
@@ -196,6 +224,18 @@ export default function Hero() {
                   <div>
                     <span className="text-lg font-bold text-foreground">{PROPERTY.lotSize}</span>
                     <span className="text-sm text-muted ml-1">Lot</span>
+                  </div>
+                </div>
+
+                <div className="w-px h-8 bg-border hidden sm:block" />
+
+                <div className="flex items-center gap-2">
+                  <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6.5 17.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm11 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM4 15.5h-.5a1 1 0 01-1-1v-3a1 1 0 011-1h1l2-3.5h7l2.5 3.5h2.5a1 1 0 011 1v3a1 1 0 01-1 1H20M8 15.5h8" />
+                  </svg>
+                  <div>
+                    <span className="text-lg font-bold text-foreground">3-Car</span>
+                    <span className="text-sm text-muted ml-1">Garage</span>
                   </div>
                 </div>
               </div>
@@ -257,7 +297,7 @@ export default function Hero() {
         </div>
       </section>
 
-      {/* Lightbox */}
+      {/* Lightbox — full gallery modal */}
       {lightboxOpen && (
         <div className="lightbox-overlay fixed inset-0 z-[100] bg-black/95 flex items-center justify-center">
           <button
@@ -272,15 +312,15 @@ export default function Hero() {
 
           <button
             onClick={() => navigate(-1)}
-            className="absolute left-4 text-white/80 hover:text-white p-2"
+            className="absolute left-2 sm:left-4 text-white/80 hover:text-white p-2"
             aria-label="Previous"
           >
-            <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-8 h-8 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
 
-          <div className="relative w-full max-w-5xl mx-8 aspect-[16/10]">
+          <div className="relative w-full max-w-5xl mx-12 sm:mx-8 aspect-[16/10]">
             <Image
               src={IMAGES[activeIndex].src}
               alt={IMAGES[activeIndex].alt}
@@ -293,10 +333,10 @@ export default function Hero() {
 
           <button
             onClick={() => navigate(1)}
-            className="absolute right-4 text-white/80 hover:text-white p-2"
+            className="absolute right-2 sm:right-4 text-white/80 hover:text-white p-2"
             aria-label="Next"
           >
-            <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-8 h-8 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
