@@ -134,7 +134,7 @@ export const AGENTS = [
     officePhone: "905-953-0550",
     email: null as string | null,
     website: true,
-    photo: null as string | null,
+    photo: "/images/julia-cresiun.png",
   },
   {
     name: "Ashot Kagramaniants",
@@ -145,7 +145,7 @@ export const AGENTS = [
     officePhone: "905-953-0550",
     email: null as string | null,
     website: false,
-    photo: null as string | null,
+    photo: "/images/ashot-kagramaniants.png",
   },
 ];
 
