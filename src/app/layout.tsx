@@ -14,13 +14,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Young's Cove — Premium Waterfront Living",
+  title: "Young's Cove — Premium Waterfront Living | Quinte West, Ontario",
   description:
-    "Discover exceptional waterfront properties at Young's Cove, New Brunswick. Schedule a private tour today.",
+    "Discover exceptional luxury waterfront properties at Young's Cove, Quinte West, Ontario. New construction by Briarwood Homes near Prince Edward County. Schedule a private tour today.",
   openGraph: {
-    title: "Young's Cove — Premium Waterfront Living",
+    title: "Young's Cove — Premium Waterfront Living | Quinte West, Ontario",
     description:
-      "Discover exceptional waterfront properties at Young's Cove, New Brunswick. Schedule a private tour today.",
+      "Discover exceptional luxury waterfront properties at Young's Cove, Quinte West, Ontario. New construction by Briarwood Homes near Prince Edward County.",
     type: "website",
     locale: "en_CA",
     siteName: "Young's Cove",

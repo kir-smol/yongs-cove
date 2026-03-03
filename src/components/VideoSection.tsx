@@ -1,11 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { YOUTUBE_VIDEO_ID } from "@/data/property";
 
-export default function VideoSection() {
+interface VideoSectionProps {
+  youtubeVideoId: string | null;
+}
+
+export default function VideoSection({ youtubeVideoId }: VideoSectionProps) {
   const [playing, setPlaying] = useState(false);
-  const thumbnailUrl = `https://img.youtube.com/vi/${YOUTUBE_VIDEO_ID}/maxresdefault.jpg`;
+
+  if (!youtubeVideoId) return null;
+
+  const thumbnailUrl = `https://img.youtube.com/vi/${youtubeVideoId}/maxresdefault.jpg`;
 
   return (
     <section className="py-12 sm:py-16 bg-white border-t border-border">
@@ -37,8 +43,8 @@ export default function VideoSection() {
               </button>
             ) : (
               <iframe
-                src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&rel=0`}
-                title="Young's Cove Property Video Tour"
+                src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&rel=0`}
+                title="Property Video Tour"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 className="absolute inset-0 w-full h-full"

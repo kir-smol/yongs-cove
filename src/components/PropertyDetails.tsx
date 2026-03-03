@@ -1,35 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { PROPERTY, LISTING_DESCRIPTION, ROOMS } from "@/data/property";
+import type { PropertyData, Room } from "@/data/properties";
 
-const FEATURES = [
-  { icon: "bed", label: "Bedrooms", value: String(PROPERTY.bedrooms) },
-  { icon: "bath", label: "Bathrooms", value: `${PROPERTY.bathrooms} + 1 Half` },
-  { icon: "area", label: "Square Footage", value: PROPERTY.livingArea },
-  { icon: "lot", label: "Lot Size", value: PROPERTY.lotSize },
-  { icon: "year", label: "Built", value: PROPERTY.yearBuilt },
-  { icon: "parking", label: "Garage", value: "3-Car Garage" },
-];
-
-const HIGHLIGHTS = [
-  `Briarwood Homes "Vineyard Collection" — luxury bungaloft`,
-  "5 bedrooms, 4 full bathrooms + 1 half bath",
-  "Soaring double-height great room with gas fireplace",
-  "Open-concept main floor — hardwood throughout",
-  "Chef-inspired kitchen with quartz countertops and large island",
-  "Luxurious primary suite on main floor",
-  "Upper level loft (15' x 19') — ideal home office or family room",
-  "2 upper bedrooms + full bathroom + storage",
-  "Elegant oak staircase with wrought iron spindles",
-  `Premium ${PROPERTY.lotSize} lot backing onto greenbelt`,
-  "Brick and stone exterior — timeless curb appeal",
-  "Deck and porch for outdoor living",
-  "Carpet-free — hardwood and tile flooring",
-  "Central A/C + forced air natural gas heating",
-  "Minutes from Prince Edward County — wineries, beaches, trails",
-  "Near Murray Canal and Bay of Quinte",
-];
+interface PropertyDetailsProps {
+  property: PropertyData;
+  rooms: Room[];
+  description: string;
+  highlights: string[];
+}
 
 function FeatureIcon({ type }: { type: string }) {
   const icons: Record<string, React.ReactNode> = {
@@ -67,11 +46,51 @@ function FeatureIcon({ type }: { type: string }) {
   return <>{icons[type] || null}</>;
 }
 
-export default function PropertyDetails() {
+export default function PropertyDetails({ property, rooms, description, highlights }: PropertyDetailsProps) {
   const [metric, setMetric] = useState(false);
-  const paragraphs = LISTING_DESCRIPTION.split("\n\n");
-  const mainRooms = ROOMS.filter((r) => r.level === "Main Level");
-  const upperRooms = ROOMS.filter((r) => r.level === "Upper Level");
+  const paragraphs = description.split("\n\n");
+  const mainRooms = rooms.filter((r) => r.level === "Main Level");
+  const upperRooms = rooms.filter((r) => r.level === "Upper Level");
+
+  const FEATURES = [
+    { icon: "bed", label: "Bedrooms", value: String(property.bedrooms) },
+    { icon: "bath", label: "Bathrooms", value: `${property.bathrooms} + 1 Half` },
+    { icon: "area", label: "Square Footage", value: property.livingArea },
+    { icon: "lot", label: "Lot Size", value: property.lotDisplayLabel },
+    { icon: "year", label: "Built", value: property.yearBuilt },
+    { icon: "parking", label: "Parking", value: property.garageLabel },
+  ];
+
+  // Build property summary rows dynamically
+  const summaryRows: [string, string][] = [
+    ["Property Type", property.type],
+    ["Building Type", `${property.buildingType} — ${property.style}`],
+    ["Storeys", property.storeys],
+    ["Title", property.title],
+  ];
+  if (property.lotAcreage) summaryRows.push(["Land Size", property.lotAcreage]);
+  summaryRows.push(
+    ["Lot Dimensions", property.lotSize],
+    ["Exterior", property.exteriorFinish],
+    ["Foundation", property.foundation],
+    ["Flooring", property.flooring],
+    ["Heating", property.heating],
+    ["Cooling", property.cooling],
+    ["Fireplace", property.fireplace],
+    ["Basement", property.basement],
+  );
+  if (property.waterfront) summaryRows.push(["Waterfront", property.waterfront]);
+  if (property.lotFeatures) summaryRows.push(["View", property.lotFeatures]);
+  if (property.access) summaryRows.push(["Access", property.access]);
+  summaryRows.push(
+    ["Water", property.water],
+    ["Sewer", property.sewer],
+  );
+  if (property.annualTaxes) summaryRows.push(["Annual Taxes", property.annualTaxes]);
+  summaryRows.push(
+    ["Rental Equipment", property.rentalEquipment],
+    ["Amenities Nearby", property.amenitiesNearby],
+  );
 
   return (
     <section id="details" className="py-16 sm:py-20">
@@ -80,10 +99,10 @@ export default function PropertyDetails() {
           <div className="lg:col-span-3">
             <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Property Details</h2>
             <p className="text-sm text-muted mt-1">
-              {PROPERTY.address}, {PROPERTY.city}, {PROPERTY.province} {PROPERTY.postalCode}
+              {property.address}, {property.city}, {property.province} {property.postalCode}
             </p>
             <p className="text-xs text-muted mt-0.5">
-              {PROPERTY.builder} &middot; {PROPERTY.locationDescription}
+              {property.builder} &middot; {property.locationDescription}
             </p>
 
             {paragraphs.map((p, i) => (
@@ -145,7 +164,7 @@ export default function PropertyDetails() {
             <div className="mt-10">
               <h3 className="text-lg font-semibold text-foreground mb-4">Property Highlights</h3>
               <ul className="grid sm:grid-cols-2 gap-3">
-                {HIGHLIGHTS.map((item) => (
+                {highlights.map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <svg className="w-5 h-5 text-accent mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path
@@ -164,24 +183,7 @@ export default function PropertyDetails() {
             <div className="mt-10">
               <h3 className="text-lg font-semibold text-foreground mb-4">Property Summary</h3>
               <div className="grid sm:grid-cols-2 gap-x-8 gap-y-3">
-                {[
-                  ["Property Type", PROPERTY.type],
-                  ["Building Type", `${PROPERTY.buildingType} — ${PROPERTY.style}`],
-                  ["Storeys", PROPERTY.storeys],
-                  ["Title", PROPERTY.title],
-                  ["Exterior", PROPERTY.exteriorFinish],
-                  ["Foundation", PROPERTY.foundation],
-                  ["Flooring", PROPERTY.flooring],
-                  ["Heating", PROPERTY.heating],
-                  ["Cooling", PROPERTY.cooling],
-                  ["Fireplace", PROPERTY.fireplace],
-                  ["Basement", PROPERTY.basement],
-                  ["Structures", PROPERTY.structures],
-                  ["Water", PROPERTY.water],
-                  ["Sewer", PROPERTY.sewer],
-                  ["Rental Equipment", PROPERTY.rentalEquipment],
-                  ["Amenities Nearby", PROPERTY.amenitiesNearby],
-                ].map(([label, value]) => (
+                {summaryRows.map(([label, value]) => (
                   <div key={label} className="flex justify-between py-2 border-b border-border/50">
                     <span className="text-sm text-muted">{label}</span>
                     <span className="text-sm font-medium text-foreground text-right max-w-[55%]">{value}</span>
@@ -195,8 +197,8 @@ export default function PropertyDetails() {
             <div className="bg-white rounded-2xl border border-border p-6 sm:p-8 sticky top-28">
               <div className="mb-6">
                 <p className="text-sm text-muted mb-1">Listed Price</p>
-                <p className="text-3xl font-bold text-primary">{PROPERTY.price}</p>
-                <p className="text-xs text-muted mt-1">MLS# {PROPERTY.mls}</p>
+                <p className="text-3xl font-bold text-primary">{property.price}</p>
+                <p className="text-xs text-muted mt-1">MLS# {property.mls}</p>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -215,9 +217,9 @@ export default function PropertyDetails() {
 
               <div className="mt-5 p-4 bg-surface-warm rounded-lg">
                 <p className="text-xs text-muted mb-1">Builder</p>
-                <p className="text-sm font-semibold text-foreground">{PROPERTY.builder}</p>
+                <p className="text-sm font-semibold text-foreground">{property.builder}</p>
                 <p className="text-xs text-muted mt-2 mb-1">Location</p>
-                <p className="text-sm text-foreground">{PROPERTY.locationDescription}</p>
+                <p className="text-sm text-foreground">{property.locationDescription}</p>
               </div>
 
               <a

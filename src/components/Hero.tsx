@@ -2,11 +2,16 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import Image from "next/image";
-import { PROPERTY, IMAGES, GALLERY_FEATURED } from "@/data/property";
+import type { PropertyListing } from "@/data/properties";
 
-const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/YD38zkcytSUF9ZfLA";
+interface HeroProps {
+  listing: PropertyListing;
+}
 
-export default function Hero() {
+export default function Hero({ listing }: HeroProps) {
+  const { property, images, galleryFeatured: featuredIdxs, googleMapsUrl } = listing;
+  const galleryFeatured = featuredIdxs.map((i) => images[i]).filter(Boolean);
+
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [scrollToIndex, setScrollToIndex] = useState(0);
   const [heroIdx, setHeroIdx] = useState(0);
@@ -18,14 +23,15 @@ export default function Hero() {
   };
 
   const openLightbox = (index: number) => {
-    const realIdx = IMAGES.findIndex((img) => img.src === GALLERY_FEATURED[index]?.src);
+    const realIdx = images.findIndex((img) => img.src === galleryFeatured[index]?.src);
     setScrollToIndex(realIdx >= 0 ? realIdx : 0);
     setLightboxOpen(true);
   };
 
+
   const navigateHero = useCallback((dir: number) => {
-    setHeroIdx((prev) => (prev + dir + IMAGES.length) % IMAGES.length);
-  }, []);
+    setHeroIdx((prev) => (prev + dir + images.length) % images.length);
+  }, [images.length]);
 
   useEffect(() => {
     if (!lightboxOpen) return;
@@ -54,15 +60,15 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
               <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">
-                {PROPERTY.address}
+                {property.address}
               </h1>
               <p className="text-sm text-muted mt-0.5">
-                {PROPERTY.city} ({PROPERTY.ward}), {PROPERTY.province} {PROPERTY.postalCode}
+                {property.city} ({property.ward}), {property.province} {property.postalCode}
               </p>
             </div>
             <div className="flex items-center gap-3">
               <a
-                href={GOOGLE_MAPS_URL}
+                href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary border border-border rounded-lg hover:bg-surface-warm transition-colors"
@@ -76,7 +82,7 @@ export default function Hero() {
               <button
                 onClick={() => {
                   if (navigator.share) {
-                    navigator.share({ title: PROPERTY.address, url: window.location.href });
+                    navigator.share({ title: property.address, url: window.location.href });
                   } else {
                     navigator.clipboard.writeText(window.location.href);
                   }
@@ -99,8 +105,8 @@ export default function Hero() {
             <div className="relative sm:col-span-2 sm:row-span-2 overflow-hidden group">
               <button onClick={openGalleryModal} className="absolute inset-0 z-10 cursor-pointer">
                 <Image
-                  src={IMAGES[heroIdx].src}
-                  alt={IMAGES[heroIdx].alt}
+                  src={images[heroIdx].src}
+                  alt={images[heroIdx].alt}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-width: 640px) 100vw, 50vw"
@@ -136,12 +142,12 @@ export default function Hero() {
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                {heroIdx + 1} / {IMAGES.length}
+                {heroIdx + 1} / {images.length}
               </span>
             </div>
 
             {/* 4 thumbnail images */}
-            {GALLERY_FEATURED.slice(1, 5).map((img, i) => (
+            {galleryFeatured.slice(1, 5).map((img, i) => (
               <button
                 key={img.src}
                 onClick={() => openLightbox(i + 1)}
@@ -158,7 +164,7 @@ export default function Hero() {
                 {i === 3 && (
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                     <span className="text-white font-semibold text-sm">
-                      + {IMAGES.length - 5} photos
+                      + {images.length - 5} photos
                     </span>
                   </div>
                 )}
@@ -173,16 +179,16 @@ export default function Hero() {
             {/* Left: price, address, specs */}
             <div className="flex-1 min-w-0">
               <div className="flex flex-wrap items-baseline gap-4">
-                <span className="text-3xl sm:text-4xl font-bold text-primary">{PROPERTY.price}</span>
-                <span className="text-sm text-muted">MLS# {PROPERTY.mls}</span>
+                <span className="text-3xl sm:text-4xl font-bold text-primary">{property.price}</span>
+                <span className="text-sm text-muted">MLS# {property.mls}</span>
                 <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-accent/10 text-accent-dark text-xs font-semibold rounded-full">
                   <span className="w-1.5 h-1.5 bg-accent rounded-full" />
-                  {PROPERTY.status}
+                  {property.status}
                 </div>
               </div>
 
               <p className="mt-2 text-sm text-muted">
-                {PROPERTY.builder} &middot; Prince Edward County
+                {property.builder} &middot; Prince Edward County
               </p>
 
               {/* Specs row */}
@@ -192,7 +198,7 @@ export default function Hero() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 7v11m0-4h18m0 4V8a3 3 0 00-3-3H6a3 3 0 00-3 3m18 3V7" />
                   </svg>
                   <div>
-                    <span className="text-lg font-bold text-foreground">{PROPERTY.bedrooms}</span>
+                    <span className="text-lg font-bold text-foreground">{property.bedrooms}</span>
                     <span className="text-sm text-muted ml-1">Beds</span>
                   </div>
                 </div>
@@ -204,7 +210,7 @@ export default function Hero() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12h18M3 12v6a3 3 0 003 3h12a3 3 0 003-3v-6M3 12V7a4 4 0 014-4h1" />
                   </svg>
                   <div>
-                    <span className="text-lg font-bold text-foreground">{PROPERTY.bathrooms}</span>
+                    <span className="text-lg font-bold text-foreground">{property.bathrooms}</span>
                     <span className="text-sm text-muted ml-1">Baths</span>
                   </div>
                 </div>
@@ -216,7 +222,7 @@ export default function Hero() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
                   </svg>
                   <div>
-                    <span className="text-lg font-bold text-foreground">{PROPERTY.livingArea}</span>
+                    <span className="text-lg font-bold text-foreground">{property.livingArea}</span>
                   </div>
                 </div>
 
@@ -227,7 +233,7 @@ export default function Hero() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18" />
                   </svg>
                   <div>
-                    <span className="text-lg font-bold text-foreground">{PROPERTY.lotSize}</span>
+                    <span className="text-lg font-bold text-foreground">{property.lotDisplayLabel}</span>
                     <span className="text-sm text-muted ml-1">Lot</span>
                   </div>
                 </div>
@@ -239,18 +245,17 @@ export default function Hero() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6.5 17.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm11 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM4 15.5h-.5a1 1 0 01-1-1v-3a1 1 0 011-1h1l2-3.5h7l2.5 3.5h2.5a1 1 0 011 1v3a1 1 0 01-1 1H20M8 15.5h8" />
                   </svg>
                   <div>
-                    <span className="text-lg font-bold text-foreground">3-Car</span>
-                    <span className="text-sm text-muted ml-1">Garage</span>
+                    <span className="text-lg font-bold text-foreground">{property.garageLabel}</span>
                   </div>
                 </div>
               </div>
 
               <div className="flex flex-wrap items-center gap-2 mt-4">
-                <span className="px-3 py-1 bg-surface-warm text-foreground text-xs font-medium rounded-full">{PROPERTY.style}</span>
-                <span className="px-3 py-1 bg-surface-warm text-foreground text-xs font-medium rounded-full">{PROPERTY.exteriorFinish}</span>
-                <span className="px-3 py-1 bg-surface-warm text-foreground text-xs font-medium rounded-full">{PROPERTY.title}</span>
-                <span className="px-3 py-1 bg-surface-warm text-foreground text-xs font-medium rounded-full">{PROPERTY.parking}</span>
-                <span className="px-3 py-1 bg-surface-warm text-foreground text-xs font-medium rounded-full">{PROPERTY.yearBuilt}</span>
+                <span className="px-3 py-1 bg-surface-warm text-foreground text-xs font-medium rounded-full">{property.style}</span>
+                <span className="px-3 py-1 bg-surface-warm text-foreground text-xs font-medium rounded-full">{property.exteriorFinish}</span>
+                <span className="px-3 py-1 bg-surface-warm text-foreground text-xs font-medium rounded-full">{property.title}</span>
+                <span className="px-3 py-1 bg-surface-warm text-foreground text-xs font-medium rounded-full">{property.parking}</span>
+                <span className="px-3 py-1 bg-surface-warm text-foreground text-xs font-medium rounded-full">{property.yearBuilt}</span>
               </div>
             </div>
 
@@ -285,7 +290,7 @@ export default function Hero() {
                 </a>
 
                 <a
-                  href={GOOGLE_MAPS_URL}
+                  href={googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center gap-2 mt-3 px-6 py-2.5 text-white/70 hover:text-white text-sm transition-colors"
@@ -316,12 +321,12 @@ export default function Hero() {
           </button>
 
           <div className="fixed top-4 left-4 z-[110] text-foreground/60 text-sm bg-white/80 px-3 py-1.5 rounded-full backdrop-blur-sm shadow-sm">
-            {IMAGES.length} photos
+            {images.length} photos
           </div>
 
           <div ref={scrollRef} className="h-full overflow-y-auto scroll-smooth">
             <div className="max-w-5xl mx-auto py-16 px-4 sm:px-6 space-y-4">
-              {IMAGES.map((img, i) => (
+              {images.map((img, i) => (
                 <div key={img.src} className="relative w-full">
                   <div className="relative w-full rounded-lg overflow-hidden" style={{ aspectRatio: "16 / 10" }}>
                     <Image
@@ -334,7 +339,7 @@ export default function Hero() {
                     />
                   </div>
                   <p className="text-muted text-xs text-center mt-2">
-                    {i + 1} / {IMAGES.length} &middot; {img.alt}
+                    {i + 1} / {images.length} &middot; {img.alt}
                   </p>
                 </div>
               ))}

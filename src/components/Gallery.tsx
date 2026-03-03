@@ -2,14 +2,18 @@
 
 import { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
-import { IMAGES, IMAGE_CATEGORIES, type ImageCategory } from "@/data/property";
+import { IMAGE_CATEGORIES, type PropertyImage, type ImageCategory } from "@/data/properties";
 
-export default function Gallery() {
+interface GalleryProps {
+  images: PropertyImage[];
+}
+
+export default function Gallery({ images }: GalleryProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [filter, setFilter] = useState<ImageCategory | "all">("all");
 
-  const filtered = filter === "all" ? IMAGES : IMAGES.filter((img) => img.category === filter);
+  const filtered = filter === "all" ? images : images.filter((img) => img.category === filter);
 
   const openLightbox = (index: number) => {
     setActiveIndex(index);
@@ -18,10 +22,10 @@ export default function Gallery() {
 
   const navigate = useCallback(
     (dir: number) => {
-      const source = filter === "all" ? IMAGES : IMAGES.filter((img) => img.category === filter);
+      const source = filter === "all" ? images : images.filter((img) => img.category === filter);
       setActiveIndex((prev) => (prev + dir + source.length) % source.length);
     },
-    [filter]
+    [filter, images]
   );
 
   useEffect(() => {
@@ -53,10 +57,10 @@ export default function Gallery() {
                 : "bg-surface-warm text-foreground hover:bg-border"
             }`}
           >
-            All ({IMAGES.length})
+            All ({images.length})
           </button>
           {IMAGE_CATEGORIES.map((cat) => {
-            const count = IMAGES.filter((img) => img.category === cat.key).length;
+            const count = images.filter((img) => img.category === cat.key).length;
             if (count === 0) return null;
             return (
               <button
@@ -80,7 +84,7 @@ export default function Gallery() {
             <button
               key={img.src}
               onClick={() => {
-                const realIdx = filter === "all" ? i : IMAGES.findIndex((im) => im.src === img.src);
+                const realIdx = filter === "all" ? i : images.findIndex((im) => im.src === img.src);
                 openLightbox(realIdx >= 0 ? realIdx : i);
               }}
               className="relative aspect-[4/3] overflow-hidden rounded-lg group cursor-pointer"
@@ -123,8 +127,8 @@ export default function Gallery() {
 
           <div className="relative w-full max-w-5xl mx-8 aspect-[16/10]">
             <Image
-              src={filtered[activeIndex]?.src ?? IMAGES[activeIndex].src}
-              alt={filtered[activeIndex]?.alt ?? IMAGES[activeIndex].alt}
+              src={filtered[activeIndex]?.src ?? images[activeIndex].src}
+              alt={filtered[activeIndex]?.alt ?? images[activeIndex].alt}
               fill
               className="object-contain"
               sizes="90vw"
@@ -147,7 +151,7 @@ export default function Gallery() {
               {activeIndex + 1} / {filtered.length}
             </p>
             <p className="text-white/40 text-xs max-w-md text-center">
-              {filtered[activeIndex]?.alt ?? IMAGES[activeIndex].alt}
+              {filtered[activeIndex]?.alt ?? images[activeIndex].alt}
             </p>
           </div>
         </div>

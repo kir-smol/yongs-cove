@@ -2,9 +2,13 @@
 
 import { useState, type FormEvent } from "react";
 import { trackEvent } from "./FacebookPixel";
-import { PROPERTY } from "@/data/property";
+import type { PropertyData } from "@/data/properties";
 
-export default function LeadForm() {
+interface LeadFormProps {
+  property: PropertyData;
+}
+
+export default function LeadForm({ property }: LeadFormProps) {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -16,9 +20,9 @@ export default function LeadForm() {
     const data = new FormData(form);
 
     trackEvent("Lead", {
-      content_name: `${PROPERTY.address} Inquiry`,
+      content_name: `${property.address} Inquiry`,
       content_category: "Real Estate",
-      value: PROPERTY.priceNum,
+      value: property.priceNum,
       currency: "CAD",
     });
 
@@ -50,7 +54,7 @@ export default function LeadForm() {
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Thank You!</h2>
           <p className="mt-3 text-muted">
-            We&apos;ve received your inquiry about {PROPERTY.address}. One of our agents
+            We&apos;ve received your inquiry about {property.address}. One of our agents
             will be in touch within 24 hours to schedule your private viewing.
           </p>
         </div>
@@ -64,11 +68,11 @@ export default function LeadForm() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 max-w-5xl mx-auto">
           <div>
             <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
-              Interested in {PROPERTY.address}?
+              Interested in {property.address}?
             </h2>
             <p className="mt-4 text-muted leading-relaxed">
               Schedule a private tour or request detailed information about this luxury
-              bungaloft by Briarwood Homes in Young&apos;s Cove. Our agents are ready to help.
+              property by {property.builder} in Young&apos;s Cove. Our agents are ready to help.
             </p>
 
             <div className="mt-8 space-y-5">
@@ -81,7 +85,7 @@ export default function LeadForm() {
                 </div>
                 <div>
                   <p className="font-semibold text-foreground">Location</p>
-                  <p className="text-sm text-muted">{PROPERTY.address}, {PROPERTY.city}, {PROPERTY.province} {PROPERTY.postalCode}</p>
+                  <p className="text-sm text-muted">{property.address}, {property.city}, {property.province} {property.postalCode}</p>
                 </div>
               </div>
 
@@ -106,7 +110,7 @@ export default function LeadForm() {
                 <div>
                   <p className="font-semibold text-foreground">Key Features</p>
                   <p className="text-sm text-muted">
-                    {PROPERTY.bedrooms} bed, {PROPERTY.bathrooms}+1 bath, {PROPERTY.livingArea}, {PROPERTY.lotSize} lot
+                    {property.bedrooms} bed, {property.bathrooms}+1 bath, {property.livingArea}, {property.lotDisplayLabel} lot
                   </p>
                 </div>
               </div>

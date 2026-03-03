@@ -1,18 +1,23 @@
-import { AGENTS } from "@/data/property";
+import type { Agent } from "@/data/properties";
 
-export default function AgentCards() {
+interface AgentCardsProps {
+  agents: Agent[];
+  propertyAddress: string;
+}
+
+export default function AgentCards({ agents, propertyAddress }: AgentCardsProps) {
   return (
     <section id="agents" className="py-16 sm:py-20 bg-surface-warm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Your Agents</h2>
           <p className="mt-2 text-muted">
-            Connect with the listing agents for 13 East Vista Terrace
+            Connect with the listing agents for {propertyAddress}
           </p>
         </div>
 
         <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
-          {AGENTS.map((agent, i) => (
+          {agents.map((agent, i) => (
             <div
               key={i}
               className="bg-white rounded-2xl border border-border p-6 flex flex-col items-center text-center"
