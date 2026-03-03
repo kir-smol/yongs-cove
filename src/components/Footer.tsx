@@ -1,3 +1,5 @@
+import { PROPERTY } from "@/data/property";
+
 export default function Footer() {
   return (
     <footer className="bg-primary-dark text-white/80 py-12">
@@ -11,14 +13,14 @@ export default function Footer() {
               <span className="text-lg font-semibold text-white">Young&apos;s Cove</span>
             </div>
             <p className="text-sm text-white/60 leading-relaxed">
-              Premium waterfront living where nature meets modern comfort.
+              New waterfront community in {PROPERTY.city}, {PROPERTY.province}.
+              Quality construction, natural beauty, modern living.
             </p>
           </div>
 
           <div>
             <h4 className="font-semibold text-white mb-3">Quick Links</h4>
             <ul className="space-y-2 text-sm text-white/60">
-              <li><a href="#listings" className="hover:text-white transition-colors">Listings</a></li>
               <li><a href="#gallery" className="hover:text-white transition-colors">Gallery</a></li>
               <li><a href="#details" className="hover:text-white transition-colors">Property Details</a></li>
               <li><a href="#agents" className="hover:text-white transition-colors">Our Agents</a></li>
@@ -27,20 +29,12 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-white mb-3">Contact</h4>
+            <h4 className="font-semibold text-white mb-3">Property</h4>
             <ul className="space-y-2 text-sm text-white/60">
-              <li>Young&apos;s Cove, New Brunswick</li>
-              <li>Canada</li>
-              <li className="pt-2">
-                <a href="tel:5550000000" className="hover:text-white transition-colors">
-                  (555) 000-0000
-                </a>
-              </li>
-              <li>
-                <a href="mailto:info@youngscove.com" className="hover:text-white transition-colors">
-                  info@youngscove.com
-                </a>
-              </li>
+              <li>{PROPERTY.address}</li>
+              <li>{PROPERTY.city}, {PROPERTY.province} {PROPERTY.postalCode}</li>
+              <li className="pt-1">MLS# {PROPERTY.mls}</li>
+              <li className="font-semibold text-accent">{PROPERTY.price}</li>
             </ul>
           </div>
         </div>

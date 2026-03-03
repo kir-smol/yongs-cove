@@ -1,21 +1,29 @@
+import { PROPERTY, LISTING_DESCRIPTION } from "@/data/property";
+
 const FEATURES = [
-  { icon: "bed", label: "Bedrooms", value: "4" },
-  { icon: "bath", label: "Bathrooms", value: "3" },
-  { icon: "area", label: "Living Area", value: "2,800 sq ft" },
-  { icon: "lot", label: "Lot Size", value: "0.85 acres" },
-  { icon: "year", label: "Year Built", value: "2024" },
-  { icon: "parking", label: "Parking", value: "2-Car Garage" },
+  { icon: "bed", label: "Bedrooms", value: String(PROPERTY.bedrooms) },
+  { icon: "bath", label: "Bathrooms", value: String(PROPERTY.bathrooms) },
+  { icon: "area", label: "Living Area", value: PROPERTY.livingArea },
+  { icon: "lot", label: "Lot Size", value: PROPERTY.lotSize },
+  { icon: "year", label: "Year Built", value: PROPERTY.yearBuilt },
+  { icon: "parking", label: "Parking", value: PROPERTY.parking },
 ];
 
 const HIGHLIGHTS = [
-  "Direct waterfront access with private dock",
-  "Open-concept living with floor-to-ceiling windows",
-  "Chef's kitchen with premium appliances",
-  "Primary suite with water views",
-  "Heated floors throughout",
-  "Energy-efficient construction",
-  "Smart home ready",
-  "Landscaped grounds with outdoor entertaining",
+  "Brand-new construction — never lived in",
+  "Soaring double-height great room with gas fireplace",
+  "Open-concept main floor with hardwood throughout",
+  "Chef's kitchen — quartz countertops, large island, dark cabinetry",
+  "Elegant oak staircase with wrought iron spindles",
+  "Upper level loft — ideal home office or family room",
+  "Primary suite with ensuite dual vanity bathroom",
+  "Porcelain tile flooring in kitchen and baths",
+  "Full unfinished basement — ready for your vision",
+  `${PROPERTY.parking} with paved driveway`,
+  "Brick and stone exterior — premium curb appeal",
+  "Backing onto mature forest — private and peaceful",
+  "Minutes from Murray Canal and Bay of Quinte",
+  "Central air conditioning + forced air gas heating",
 ];
 
 function FeatureIcon({ type }: { type: string }) {
@@ -55,26 +63,25 @@ function FeatureIcon({ type }: { type: string }) {
 }
 
 export default function PropertyDetails() {
+  const paragraphs = LISTING_DESCRIPTION.split("\n\n");
+
   return (
     <section id="details" className="py-16 sm:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
           <div className="lg:col-span-3">
             <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Property Details</h2>
-            <p className="mt-4 text-muted leading-relaxed">
-              Nestled along the pristine shores, Young&apos;s Cove offers an exceptional waterfront
-              living experience. This newly constructed residence combines contemporary architecture
-              with the natural beauty of its surroundings, creating a sanctuary that&apos;s both
-              luxurious and welcoming.
-            </p>
-            <p className="mt-4 text-muted leading-relaxed">
-              Every detail has been carefully considered — from the expansive windows that flood
-              the living spaces with natural light, to the premium finishes that define each room.
-              Step outside to your private dock and enjoy direct water access, or entertain guests
-              on the beautifully landscaped grounds.
+            <p className="text-sm text-muted mt-1">
+              {PROPERTY.address}, {PROPERTY.city}, {PROPERTY.province} {PROPERTY.postalCode}
             </p>
 
-            <div className="mt-8">
+            {paragraphs.map((p, i) => (
+              <p key={i} className="mt-4 text-muted leading-relaxed">
+                {p}
+              </p>
+            ))}
+
+            <div className="mt-10">
               <h3 className="text-lg font-semibold text-foreground mb-4">Property Highlights</h3>
               <ul className="grid sm:grid-cols-2 gap-3">
                 {HIGHLIGHTS.map((item) => (
@@ -91,14 +98,36 @@ export default function PropertyDetails() {
                 ))}
               </ul>
             </div>
+
+            {/* Additional specs */}
+            <div className="mt-10">
+              <h3 className="text-lg font-semibold text-foreground mb-4">Additional Information</h3>
+              <div className="grid sm:grid-cols-2 gap-x-8 gap-y-3">
+                {[
+                  ["Property Type", `${PROPERTY.style} ${PROPERTY.type}`],
+                  ["Exterior", PROPERTY.exteriorFinish],
+                  ["Heating", PROPERTY.heating],
+                  ["Cooling", PROPERTY.cooling],
+                  ["Flooring", PROPERTY.flooring],
+                  ["Fireplace", PROPERTY.fireplace],
+                  ["Basement", PROPERTY.basement],
+                  ["Waterfront", PROPERTY.waterfront],
+                ].map(([label, value]) => (
+                  <div key={label} className="flex justify-between py-2 border-b border-border/50">
+                    <span className="text-sm text-muted">{label}</span>
+                    <span className="text-sm font-medium text-foreground">{value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl border border-border p-6 sm:p-8 sticky top-28">
               <div className="mb-6">
                 <p className="text-sm text-muted mb-1">Listed Price</p>
-                <p className="text-3xl font-bold text-primary">$1,250,000</p>
-                <p className="text-xs text-muted mt-1">MLS# 00000000</p>
+                <p className="text-3xl font-bold text-primary">{PROPERTY.price}</p>
+                <p className="text-xs text-muted mt-1">MLS# {PROPERTY.mls}</p>
               </div>
 
               <div className="grid grid-cols-2 gap-4">

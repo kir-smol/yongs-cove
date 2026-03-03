@@ -2,29 +2,33 @@
 
 import { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
-
-const SAMPLE_IMAGES = [
-  { src: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80", alt: "Property exterior" },
-  { src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80", alt: "Living room" },
-  { src: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80", alt: "Kitchen" },
-  { src: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80", alt: "Bedroom" },
-  { src: "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=800&q=80", alt: "Waterfront view" },
-];
+import { IMAGES, GALLERY_FEATURED, IMAGE_CATEGORIES, type ImageCategory } from "@/data/property";
 
 export default function Gallery() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [filter, setFilter] = useState<ImageCategory | "all">("all");
+
+  const filtered = filter === "all" ? IMAGES : IMAGES.filter((img) => img.category === filter);
 
   const openLightbox = (index: number) => {
     setActiveIndex(index);
     setLightboxOpen(true);
   };
 
+  const openFromFeatured = (featuredIdx: number) => {
+    const featuredImage = GALLERY_FEATURED[featuredIdx];
+    const fullIdx = IMAGES.findIndex((img) => img.src === featuredImage.src);
+    setFilter("all");
+    openLightbox(fullIdx >= 0 ? fullIdx : 0);
+  };
+
   const navigate = useCallback(
     (dir: number) => {
-      setActiveIndex((prev) => (prev + dir + SAMPLE_IMAGES.length) % SAMPLE_IMAGES.length);
+      const source = filter === "all" ? IMAGES : IMAGES.filter((img) => img.category === filter);
+      setActiveIndex((prev) => (prev + dir + source.length) % source.length);
     },
-    []
+    [filter]
   );
 
   useEffect(() => {
@@ -42,15 +46,16 @@ export default function Gallery() {
     <section id="gallery" className="py-16 sm:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
-          <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Gallery</h2>
-          <p className="mt-2 text-muted">Explore the property through our curated collection</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Property Gallery</h2>
+          <p className="mt-2 text-muted">49 professional photos — interior, exterior, aerial &amp; twilight</p>
         </div>
 
-        <div className="gallery-grid">
-          {SAMPLE_IMAGES.map((img, i) => (
+        {/* Featured grid */}
+        <div className="gallery-grid mb-8">
+          {GALLERY_FEATURED.map((img, i) => (
             <button
-              key={i}
-              onClick={() => openLightbox(i)}
+              key={img.src}
+              onClick={() => openFromFeatured(i)}
               className="relative overflow-hidden rounded-lg group cursor-pointer"
             >
               <Image
@@ -61,10 +66,10 @@ export default function Gallery() {
                 sizes={i === 0 ? "(max-width: 768px) 100vw, 66vw" : "(max-width: 768px) 50vw, 33vw"}
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
-              {i === SAMPLE_IMAGES.length - 1 && (
+              {i === GALLERY_FEATURED.length - 1 && (
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                   <span className="text-white font-semibold text-sm">
-                    +{SAMPLE_IMAGES.length - 5} More
+                    +{IMAGES.length - GALLERY_FEATURED.length} More Photos
                   </span>
                 </div>
               )}
@@ -72,16 +77,61 @@ export default function Gallery() {
           ))}
         </div>
 
-        <div className="text-center mt-6">
+        {/* Category filters */}
+        <div className="flex flex-wrap justify-center gap-2 mb-6">
           <button
-            onClick={() => openLightbox(0)}
-            className="text-sm font-medium text-primary hover:text-primary-light transition-colors underline underline-offset-4"
+            onClick={() => setFilter("all")}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              filter === "all"
+                ? "bg-primary text-white"
+                : "bg-surface-warm text-foreground hover:bg-border"
+            }`}
           >
-            View all photos
+            All ({IMAGES.length})
           </button>
+          {IMAGE_CATEGORIES.map((cat) => {
+            const count = IMAGES.filter((img) => img.category === cat.key).length;
+            return (
+              <button
+                key={cat.key}
+                onClick={() => setFilter(cat.key)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  filter === cat.key
+                    ? "bg-primary text-white"
+                    : "bg-surface-warm text-foreground hover:bg-border"
+                }`}
+              >
+                {cat.label} ({count})
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Filtered thumbnail grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+          {filtered.map((img, i) => (
+            <button
+              key={img.src}
+              onClick={() => {
+                const realIdx = filter === "all" ? i : IMAGES.findIndex((im) => im.src === img.src);
+                openLightbox(realIdx >= 0 ? realIdx : i);
+              }}
+              className="relative aspect-[4/3] overflow-hidden rounded-lg group cursor-pointer"
+            >
+              <Image
+                src={img.src}
+                alt={img.alt}
+                fill
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors" />
+            </button>
+          ))}
         </div>
       </div>
 
+      {/* Lightbox */}
       {lightboxOpen && (
         <div className="lightbox-overlay fixed inset-0 z-[100] bg-black/95 flex items-center justify-center">
           <button
@@ -106,8 +156,8 @@ export default function Gallery() {
 
           <div className="relative w-full max-w-5xl mx-8 aspect-[16/10]">
             <Image
-              src={SAMPLE_IMAGES[activeIndex].src}
-              alt={SAMPLE_IMAGES[activeIndex].alt}
+              src={filtered[activeIndex]?.src ?? IMAGES[activeIndex].src}
+              alt={filtered[activeIndex]?.alt ?? IMAGES[activeIndex].alt}
               fill
               className="object-contain"
               sizes="90vw"
@@ -125,8 +175,13 @@ export default function Gallery() {
             </svg>
           </button>
 
-          <div className="absolute bottom-6 text-white/60 text-sm">
-            {activeIndex + 1} / {SAMPLE_IMAGES.length}
+          <div className="absolute bottom-6 flex flex-col items-center gap-1">
+            <p className="text-white/60 text-sm">
+              {activeIndex + 1} / {filtered.length}
+            </p>
+            <p className="text-white/40 text-xs max-w-md text-center">
+              {filtered[activeIndex]?.alt ?? IMAGES[activeIndex].alt}
+            </p>
           </div>
         </div>
       )}

@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { trackEvent } from "./FacebookPixel";
+import { PROPERTY } from "@/data/property";
 
 export default function LeadForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -14,16 +15,15 @@ export default function LeadForm() {
     const form = e.currentTarget;
     const data = new FormData(form);
 
-    // Track lead event for Facebook Pixel
     trackEvent("Lead", {
-      content_name: "Young's Cove Inquiry",
+      content_name: `${PROPERTY.address} Inquiry`,
       content_category: "Real Estate",
+      value: PROPERTY.priceNum,
+      currency: "CAD",
     });
 
-    // TODO: Connect to your backend / CRM / email service
-    // For now, simulate submission
+    // TODO: Connect to backend / CRM / email service
     await new Promise((r) => setTimeout(r, 1000));
-
     console.log("Lead captured:", Object.fromEntries(data));
     setSubmitted(true);
     setLoading(false);
@@ -40,8 +40,8 @@ export default function LeadForm() {
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Thank You!</h2>
           <p className="mt-3 text-muted">
-            We&apos;ve received your inquiry. One of our agents will be in touch within 24 hours
-            to schedule your private viewing of Young&apos;s Cove.
+            We&apos;ve received your inquiry about {PROPERTY.address}. One of our agents
+            will be in touch within 24 hours to schedule your private viewing.
           </p>
         </div>
       </section>
@@ -54,11 +54,11 @@ export default function LeadForm() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 max-w-5xl mx-auto">
           <div>
             <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
-              Interested in Young&apos;s Cove?
+              Interested in {PROPERTY.address}?
             </h2>
             <p className="mt-4 text-muted leading-relaxed">
-              Schedule a private tour or request detailed information about this exceptional
-              waterfront property. Our agents are ready to help you find your dream home.
+              Schedule a private tour or request detailed information about this brand-new
+              {" "}{PROPERTY.style.toLowerCase()} home in Young&apos;s Cove. Our agents are ready to help.
             </p>
 
             <div className="mt-8 space-y-5">
@@ -71,7 +71,7 @@ export default function LeadForm() {
                 </div>
                 <div>
                   <p className="font-semibold text-foreground">Location</p>
-                  <p className="text-sm text-muted">Young&apos;s Cove, New Brunswick, Canada</p>
+                  <p className="text-sm text-muted">{PROPERTY.address}, {PROPERTY.city}, {PROPERTY.province} {PROPERTY.postalCode}</p>
                 </div>
               </div>
 
@@ -90,12 +90,14 @@ export default function LeadForm() {
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
                   <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground">Call Us</p>
-                  <p className="text-sm text-muted">(555) 000-0000</p>
+                  <p className="font-semibold text-foreground">Key Features</p>
+                  <p className="text-sm text-muted">
+                    {PROPERTY.bedrooms} bed, {PROPERTY.bathrooms} bath, {PROPERTY.livingArea}, {PROPERTY.parking}
+                  </p>
                 </div>
               </div>
             </div>
@@ -156,7 +158,7 @@ export default function LeadForm() {
                   name="phone"
                   required
                   className="w-full px-4 py-3 rounded-lg border border-border bg-white text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
-                  placeholder="(555) 000-0000"
+                  placeholder="(613) 000-0000"
                 />
               </div>
 
@@ -171,8 +173,8 @@ export default function LeadForm() {
                 >
                   <option value="viewing">Scheduling a Viewing</option>
                   <option value="info">More Information</option>
-                  <option value="pricing">Pricing Details</option>
-                  <option value="financing">Financing Options</option>
+                  <option value="pricing">Pricing &amp; Financing</option>
+                  <option value="similar">Similar Properties in Young&apos;s Cove</option>
                 </select>
               </div>
 
@@ -198,7 +200,7 @@ export default function LeadForm() {
               </button>
 
               <p className="text-xs text-muted text-center">
-                By submitting, you agree to receive communications about Young&apos;s Cove.
+                By submitting, you agree to receive communications about this listing.
                 We respect your privacy.
               </p>
             </form>
