@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
-import { IMAGES, GALLERY_FEATURED, IMAGE_CATEGORIES, type ImageCategory } from "@/data/property";
+import { IMAGES, IMAGE_CATEGORIES, type ImageCategory } from "@/data/property";
 
 export default function Gallery() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -14,13 +14,6 @@ export default function Gallery() {
   const openLightbox = (index: number) => {
     setActiveIndex(index);
     setLightboxOpen(true);
-  };
-
-  const openFromFeatured = (featuredIdx: number) => {
-    const featuredImage = GALLERY_FEATURED[featuredIdx];
-    const fullIdx = IMAGES.findIndex((img) => img.src === featuredImage.src);
-    setFilter("all");
-    openLightbox(fullIdx >= 0 ? fullIdx : 0);
   };
 
   const navigate = useCallback(
@@ -43,38 +36,11 @@ export default function Gallery() {
   }, [lightboxOpen, navigate]);
 
   return (
-    <section id="gallery" className="py-16 sm:py-20 bg-white">
+    <section id="gallery" className="py-16 sm:py-20 bg-white border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Property Gallery</h2>
-          <p className="mt-2 text-muted">Professional photos — staged interior, exterior, aerial views</p>
-        </div>
-
-        {/* Featured grid */}
-        <div className="gallery-grid mb-8">
-          {GALLERY_FEATURED.map((img, i) => (
-            <button
-              key={img.src}
-              onClick={() => openFromFeatured(i)}
-              className="relative overflow-hidden rounded-lg group cursor-pointer"
-            >
-              <Image
-                src={img.src}
-                alt={img.alt}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                sizes={i === 0 ? "(max-width: 768px) 100vw, 66vw" : "(max-width: 768px) 50vw, 33vw"}
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
-              {i === GALLERY_FEATURED.length - 1 && (
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <span className="text-white font-semibold text-sm">
-                    +{IMAGES.length - GALLERY_FEATURED.length} More Photos
-                  </span>
-                </div>
-              )}
-            </button>
-          ))}
+        <div className="text-center mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground">All Photos</h2>
+          <p className="mt-2 text-muted">Browse by category</p>
         </div>
 
         {/* Category filters */}
@@ -91,6 +57,7 @@ export default function Gallery() {
           </button>
           {IMAGE_CATEGORIES.map((cat) => {
             const count = IMAGES.filter((img) => img.category === cat.key).length;
+            if (count === 0) return null;
             return (
               <button
                 key={cat.key}
@@ -107,7 +74,7 @@ export default function Gallery() {
           })}
         </div>
 
-        {/* Filtered thumbnail grid */}
+        {/* Thumbnail grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
           {filtered.map((img, i) => (
             <button
