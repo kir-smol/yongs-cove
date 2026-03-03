@@ -22,11 +22,21 @@ export default function LeadForm() {
       currency: "CAD",
     });
 
-    // TODO: Connect to backend / CRM / email service
-    await new Promise((r) => setTimeout(r, 1000));
-    console.log("Lead captured:", Object.fromEntries(data));
-    setSubmitted(true);
-    setLoading(false);
+    try {
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.fromEntries(data)),
+      });
+
+      if (!res.ok) throw new Error("submit failed");
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Lead form error:", err);
+      alert("Something went wrong. Please try again or call us directly.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {

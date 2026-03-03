@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import Image from "next/image";
 import { PROPERTY, IMAGES, GALLERY_FEATURED } from "@/data/property";
 
@@ -8,23 +8,20 @@ const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/YD38zkcytSUF9ZfLA";
 
 export default function Hero() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [scrollToIndex, setScrollToIndex] = useState(0);
   const [heroIdx, setHeroIdx] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const openGalleryModal = () => {
-    setActiveIndex(0);
+    setScrollToIndex(0);
     setLightboxOpen(true);
   };
 
   const openLightbox = (index: number) => {
     const realIdx = IMAGES.findIndex((img) => img.src === GALLERY_FEATURED[index]?.src);
-    setActiveIndex(realIdx >= 0 ? realIdx : 0);
+    setScrollToIndex(realIdx >= 0 ? realIdx : 0);
     setLightboxOpen(true);
   };
-
-  const navigate = useCallback((dir: number) => {
-    setActiveIndex((prev) => (prev + dir + IMAGES.length) % IMAGES.length);
-  }, []);
 
   const navigateHero = useCallback((dir: number) => {
     setHeroIdx((prev) => (prev + dir + IMAGES.length) % IMAGES.length);
@@ -32,14 +29,22 @@ export default function Hero() {
 
   useEffect(() => {
     if (!lightboxOpen) return;
+    document.body.style.overflow = "hidden";
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") setLightboxOpen(false);
-      if (e.key === "ArrowLeft") navigate(-1);
-      if (e.key === "ArrowRight") navigate(1);
     };
     window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [lightboxOpen, navigate]);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handler);
+    };
+  }, [lightboxOpen]);
+
+  useEffect(() => {
+    if (!lightboxOpen || !scrollRef.current) return;
+    const target = scrollRef.current.children[scrollToIndex] as HTMLElement | undefined;
+    if (target) target.scrollIntoView({ behavior: "instant", block: "start" });
+  }, [lightboxOpen, scrollToIndex]);
 
   return (
     <>
@@ -297,57 +302,43 @@ export default function Hero() {
         </div>
       </section>
 
-      {/* Lightbox — full gallery modal */}
+      {/* Lightbox — vertical scroll gallery modal */}
       {lightboxOpen && (
-        <div className="lightbox-overlay fixed inset-0 z-[100] bg-black/95 flex items-center justify-center">
+        <div className="fixed inset-0 z-[100] bg-white">
           <button
             onClick={() => setLightboxOpen(false)}
-            className="absolute top-4 right-4 text-white/80 hover:text-white p-2 z-10"
+            className="fixed top-4 right-4 z-[110] text-foreground/70 hover:text-foreground p-2 bg-white/80 rounded-full backdrop-blur-sm shadow-sm"
             aria-label="Close"
           >
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
 
-          <button
-            onClick={() => navigate(-1)}
-            className="absolute left-2 sm:left-4 text-white/80 hover:text-white p-2"
-            aria-label="Previous"
-          >
-            <svg className="w-8 h-8 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-
-          <div className="relative w-full max-w-5xl mx-12 sm:mx-8 aspect-[16/10]">
-            <Image
-              src={IMAGES[activeIndex].src}
-              alt={IMAGES[activeIndex].alt}
-              fill
-              className="object-contain"
-              sizes="90vw"
-              priority
-            />
+          <div className="fixed top-4 left-4 z-[110] text-foreground/60 text-sm bg-white/80 px-3 py-1.5 rounded-full backdrop-blur-sm shadow-sm">
+            {IMAGES.length} photos
           </div>
 
-          <button
-            onClick={() => navigate(1)}
-            className="absolute right-2 sm:right-4 text-white/80 hover:text-white p-2"
-            aria-label="Next"
-          >
-            <svg className="w-8 h-8 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-
-          <div className="absolute bottom-6 flex flex-col items-center gap-1">
-            <p className="text-white/60 text-sm">
-              {activeIndex + 1} / {IMAGES.length}
-            </p>
-            <p className="text-white/40 text-xs max-w-md text-center">
-              {IMAGES[activeIndex].alt}
-            </p>
+          <div ref={scrollRef} className="h-full overflow-y-auto scroll-smooth">
+            <div className="max-w-5xl mx-auto py-16 px-4 sm:px-6 space-y-4">
+              {IMAGES.map((img, i) => (
+                <div key={img.src} className="relative w-full">
+                  <div className="relative w-full rounded-lg overflow-hidden" style={{ aspectRatio: "16 / 10" }}>
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 1024px) 100vw, 1024px"
+                      priority={i < 3}
+                    />
+                  </div>
+                  <p className="text-muted text-xs text-center mt-2">
+                    {i + 1} / {IMAGES.length} &middot; {img.alt}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
