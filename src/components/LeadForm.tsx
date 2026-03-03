@@ -57,8 +57,8 @@ export default function LeadForm() {
               Interested in {PROPERTY.address}?
             </h2>
             <p className="mt-4 text-muted leading-relaxed">
-              Schedule a private tour or request detailed information about this brand-new
-              {" "}{PROPERTY.style.toLowerCase()} home in Young&apos;s Cove. Our agents are ready to help.
+              Schedule a private tour or request detailed information about this luxury
+              bungaloft by Briarwood Homes in Young&apos;s Cove. Our agents are ready to help.
             </p>
 
             <div className="mt-8 space-y-5">
@@ -96,7 +96,7 @@ export default function LeadForm() {
                 <div>
                   <p className="font-semibold text-foreground">Key Features</p>
                   <p className="text-sm text-muted">
-                    {PROPERTY.bedrooms} bed, {PROPERTY.bathrooms} bath, {PROPERTY.livingArea}, {PROPERTY.parking}
+                    {PROPERTY.bedrooms} bed, {PROPERTY.bathrooms}+1 bath, {PROPERTY.livingArea}, {PROPERTY.lotSize} lot
                   </p>
                 </div>
               </div>

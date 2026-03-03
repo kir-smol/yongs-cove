@@ -23,7 +23,7 @@ export default function Hero() {
               {PROPERTY.address}
             </h1>
             <p className="mt-2 text-lg sm:text-xl text-white/90 max-w-2xl">
-              {PROPERTY.city}, {PROPERTY.province} &mdash; {PROPERTY.style} {PROPERTY.type} in Young&apos;s Cove
+              {PROPERTY.city}, {PROPERTY.province} &mdash; {PROPERTY.builder}
             </p>
 
             <div className="flex flex-wrap items-center gap-3 mt-5">
@@ -31,16 +31,16 @@ export default function Hero() {
                 {PROPERTY.bedrooms} Bed
               </span>
               <span className="px-4 py-2 bg-white/15 backdrop-blur-sm text-white text-sm font-medium rounded-lg border border-white/20">
-                {PROPERTY.bathrooms} Bath
+                {PROPERTY.bathrooms} + 1 Bath
               </span>
               <span className="px-4 py-2 bg-white/15 backdrop-blur-sm text-white text-sm font-medium rounded-lg border border-white/20">
                 {PROPERTY.livingArea}
               </span>
               <span className="px-4 py-2 bg-white/15 backdrop-blur-sm text-white text-sm font-medium rounded-lg border border-white/20">
-                New Construction
+                Luxury Bungaloft
               </span>
               <span className="px-4 py-2 bg-white/15 backdrop-blur-sm text-white text-sm font-medium rounded-lg border border-white/20">
-                {PROPERTY.parking}
+                {PROPERTY.lotSize} Lot
               </span>
             </div>
 

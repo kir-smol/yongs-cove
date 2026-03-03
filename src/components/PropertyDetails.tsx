@@ -1,29 +1,31 @@
-import { PROPERTY, LISTING_DESCRIPTION } from "@/data/property";
+import { PROPERTY, LISTING_DESCRIPTION, ROOMS } from "@/data/property";
 
 const FEATURES = [
   { icon: "bed", label: "Bedrooms", value: String(PROPERTY.bedrooms) },
-  { icon: "bath", label: "Bathrooms", value: String(PROPERTY.bathrooms) },
-  { icon: "area", label: "Living Area", value: PROPERTY.livingArea },
+  { icon: "bath", label: "Bathrooms", value: `${PROPERTY.bathrooms} + 1 Half` },
+  { icon: "area", label: "Square Footage", value: PROPERTY.livingArea },
   { icon: "lot", label: "Lot Size", value: PROPERTY.lotSize },
-  { icon: "year", label: "Year Built", value: PROPERTY.yearBuilt },
-  { icon: "parking", label: "Parking", value: PROPERTY.parking },
+  { icon: "year", label: "Built", value: PROPERTY.yearBuilt },
+  { icon: "parking", label: "Parking", value: `${PROPERTY.totalParkingSpaces} Spaces` },
 ];
 
 const HIGHLIGHTS = [
-  "Brand-new construction — never lived in",
+  `Briarwood Homes "Vineyard Collection" — luxury bungaloft`,
+  "5 bedrooms, 4 full bathrooms + 1 half bath",
   "Soaring double-height great room with gas fireplace",
-  "Open-concept main floor with hardwood throughout",
-  "Chef's kitchen — quartz countertops, large island, dark cabinetry",
+  "Open-concept main floor — hardwood throughout",
+  "Chef-inspired kitchen with quartz countertops and large island",
+  "Luxurious primary suite on main floor",
+  "Upper level loft (15' x 19') — ideal home office or family room",
+  "2 upper bedrooms + full bathroom + storage",
   "Elegant oak staircase with wrought iron spindles",
-  "Upper level loft — ideal home office or family room",
-  "Primary suite with ensuite dual vanity bathroom",
-  "Porcelain tile flooring in kitchen and baths",
-  "Full unfinished basement — ready for your vision",
-  `${PROPERTY.parking} with paved driveway`,
-  "Brick and stone exterior — premium curb appeal",
-  "Backing onto mature forest — private and peaceful",
-  "Minutes from Murray Canal and Bay of Quinte",
-  "Central air conditioning + forced air gas heating",
+  `Premium ${PROPERTY.lotSize} lot backing onto greenbelt`,
+  "Brick and stone exterior — timeless curb appeal",
+  "Deck and porch for outdoor living",
+  "Carpet-free — hardwood and tile flooring",
+  "Central A/C + forced air natural gas heating",
+  "Minutes from Prince Edward County — wineries, beaches, trails",
+  "Near Murray Canal and Bay of Quinte",
 ];
 
 function FeatureIcon({ type }: { type: string }) {
@@ -64,6 +66,8 @@ function FeatureIcon({ type }: { type: string }) {
 
 export default function PropertyDetails() {
   const paragraphs = LISTING_DESCRIPTION.split("\n\n");
+  const mainRooms = ROOMS.filter((r) => r.level === "Main Level");
+  const upperRooms = ROOMS.filter((r) => r.level === "Upper Level");
 
   return (
     <section id="details" className="py-16 sm:py-20">
@@ -74,13 +78,46 @@ export default function PropertyDetails() {
             <p className="text-sm text-muted mt-1">
               {PROPERTY.address}, {PROPERTY.city}, {PROPERTY.province} {PROPERTY.postalCode}
             </p>
+            <p className="text-xs text-muted mt-0.5">
+              {PROPERTY.builder} &middot; {PROPERTY.locationDescription}
+            </p>
 
             {paragraphs.map((p, i) => (
-              <p key={i} className="mt-4 text-muted leading-relaxed">
+              <p key={i} className={`${i === 0 ? "mt-6 text-lg font-medium text-foreground" : "mt-4 text-muted"} leading-relaxed`}>
                 {p}
               </p>
             ))}
 
+            {/* Room dimensions */}
+            <div className="mt-10">
+              <h3 className="text-lg font-semibold text-foreground mb-4">Room Dimensions</h3>
+              <div className="grid sm:grid-cols-2 gap-6">
+                <div>
+                  <h4 className="text-sm font-semibold text-primary mb-3 uppercase tracking-wider">Main Level</h4>
+                  <div className="space-y-2">
+                    {mainRooms.map((r) => (
+                      <div key={r.name} className="flex justify-between py-2 border-b border-border/50">
+                        <span className="text-sm text-foreground">{r.name}</span>
+                        <span className="text-sm text-muted">{r.imperial}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-primary mb-3 uppercase tracking-wider">Upper Level</h4>
+                  <div className="space-y-2">
+                    {upperRooms.map((r) => (
+                      <div key={r.name} className="flex justify-between py-2 border-b border-border/50">
+                        <span className="text-sm text-foreground">{r.name}</span>
+                        <span className="text-sm text-muted">{r.imperial}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Highlights */}
             <div className="mt-10">
               <h3 className="text-lg font-semibold text-foreground mb-4">Property Highlights</h3>
               <ul className="grid sm:grid-cols-2 gap-3">
@@ -101,21 +138,29 @@ export default function PropertyDetails() {
 
             {/* Additional specs */}
             <div className="mt-10">
-              <h3 className="text-lg font-semibold text-foreground mb-4">Additional Information</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-4">Property Summary</h3>
               <div className="grid sm:grid-cols-2 gap-x-8 gap-y-3">
                 {[
-                  ["Property Type", `${PROPERTY.style} ${PROPERTY.type}`],
+                  ["Property Type", PROPERTY.type],
+                  ["Building Type", `${PROPERTY.buildingType} — ${PROPERTY.style}`],
+                  ["Storeys", PROPERTY.storeys],
+                  ["Title", PROPERTY.title],
                   ["Exterior", PROPERTY.exteriorFinish],
+                  ["Foundation", PROPERTY.foundation],
+                  ["Flooring", PROPERTY.flooring],
                   ["Heating", PROPERTY.heating],
                   ["Cooling", PROPERTY.cooling],
-                  ["Flooring", PROPERTY.flooring],
                   ["Fireplace", PROPERTY.fireplace],
                   ["Basement", PROPERTY.basement],
-                  ["Waterfront", PROPERTY.waterfront],
+                  ["Structures", PROPERTY.structures],
+                  ["Water", PROPERTY.water],
+                  ["Sewer", PROPERTY.sewer],
+                  ["Rental Equipment", PROPERTY.rentalEquipment],
+                  ["Amenities Nearby", PROPERTY.amenitiesNearby],
                 ].map(([label, value]) => (
                   <div key={label} className="flex justify-between py-2 border-b border-border/50">
                     <span className="text-sm text-muted">{label}</span>
-                    <span className="text-sm font-medium text-foreground">{value}</span>
+                    <span className="text-sm font-medium text-foreground text-right max-w-[55%]">{value}</span>
                   </div>
                 ))}
               </div>
@@ -144,6 +189,13 @@ export default function PropertyDetails() {
                 ))}
               </div>
 
+              <div className="mt-5 p-4 bg-surface-warm rounded-lg">
+                <p className="text-xs text-muted mb-1">Builder</p>
+                <p className="text-sm font-semibold text-foreground">{PROPERTY.builder}</p>
+                <p className="text-xs text-muted mt-2 mb-1">Location</p>
+                <p className="text-sm text-foreground">{PROPERTY.locationDescription}</p>
+              </div>
+
               <a
                 href="#contact"
                 className="mt-6 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-primary hover:bg-primary-light text-white font-semibold rounded-lg transition-colors"
@@ -155,7 +207,7 @@ export default function PropertyDetails() {
                 href="#contact"
                 className="mt-3 w-full inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-colors"
               >
-                Book a Viewing
+                Book a Private Viewing
               </a>
             </div>
           </div>

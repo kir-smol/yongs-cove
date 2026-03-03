@@ -6,33 +6,65 @@ export const PROPERTY = {
   postalCode: "K0K 1L0",
   country: "Canada",
   mls: "X12767930",
-  price: "$799,900",
-  priceNum: 799900,
-  type: "Detached",
-  style: "2-Storey",
-  bedrooms: 4,
-  bathrooms: 3,
-  livingArea: "2,800+ sq ft",
-  lotSize: "Lot 50 x 120 ft",
-  yearBuilt: "2025",
-  parking: "2-Car Attached Garage",
-  heating: "Forced Air, Gas",
-  cooling: "Central Air",
-  basement: "Full, Unfinished",
+  price: "$1,100,000",
+  priceNum: 1100000,
+  type: "Single Family",
+  buildingType: "House",
+  style: "Bungalow with Loft",
+  storeys: "1.5",
+  bedrooms: 5,
+  bedroomsAboveGrade: 5,
+  bathrooms: 4,
+  bathroomsPartial: 1,
+  livingArea: "2,500–3,000 sq ft",
+  lotSize: "72.3 x 147 ft",
+  lotFrontage: "72 ft 3 in",
+  lotDepth: "147 ft",
+  yearBuilt: "New Construction",
+  parking: "Garage",
+  totalParkingSpaces: 9,
+  heating: "Forced Air (Natural Gas)",
+  cooling: "Central Air Conditioning",
+  fireplace: "1",
+  basement: "Crawl Space",
   exteriorFinish: "Brick & Stone",
-  flooring: "Hardwood, Porcelain Tile",
-  fireplace: "Gas Fireplace",
-  waterfront: "Near Murray Canal",
+  flooring: "Hardwood, Tile",
+  foundation: "Concrete",
+  title: "Freehold",
+  water: "Municipal Water",
+  sewer: "Sanitary Sewer",
+  structures: "Deck, Porch",
+  rentalEquipment: "Tankless Water Heater",
+  features: "Backs on Greenbelt, Conservation/Green Belt, Carpet Free",
+  amenitiesNearby: "Beach, Marina, Golf, Schools, Hospital",
+  communityName: "Murray Ward",
+  locationDescription: "County Rd 64 & Gardenville Rd",
   status: "For Sale",
+  daysOnMarket: 24,
+  builder: "Briarwood Homes — Vineyard Collection",
 };
 
-export const LISTING_DESCRIPTION = `Welcome to 13 East Vista Terrace in the sought-after Young's Cove community, Quinte West. This stunning brand-new 2-storey home features over 2,800 sq ft of thoughtfully designed living space with premium finishes throughout.
+export const ROOMS = [
+  { level: "Main Level", name: "Great Room", dimensions: "4.27m x 5.18m", imperial: "14' x 17'" },
+  { level: "Main Level", name: "Eating Area", dimensions: "4.17m x 3.35m", imperial: "13'8\" x 11'" },
+  { level: "Main Level", name: "Kitchen", dimensions: "4.32m x 3.05m", imperial: "14'2\" x 10'" },
+  { level: "Main Level", name: "Primary Bedroom", dimensions: "4.47m x 4.88m", imperial: "14'8\" x 16'" },
+  { level: "Main Level", name: "Bedroom 2", dimensions: "3.35m x 3.05m", imperial: "11' x 10'" },
+  { level: "Main Level", name: "Bedroom 3", dimensions: "3.35m x 3.05m", imperial: "11' x 10'" },
+  { level: "Upper Level", name: "Bedroom 4", dimensions: "4.17m x 3.35m", imperial: "13'8\" x 11'" },
+  { level: "Upper Level", name: "Bedroom 5", dimensions: "3.51m x 3.35m", imperial: "11'6\" x 11'" },
+  { level: "Upper Level", name: "Loft", dimensions: "4.57m x 5.79m", imperial: "15' x 19'" },
+];
 
-Step inside to discover a soaring double-height great room with a gas fireplace and oversized windows that flood the space with natural light. The open-concept main floor flows seamlessly from the living area into the chef's kitchen, featuring quartz countertops, a large center island with undermount sink, dark cabinetry, and elegant porcelain tile flooring.
+export const LISTING_DESCRIPTION = `Luxury Bungalow with Loft Near Prestigious Prince Edward County — "Briarwood Homes Vineyard Collection"
 
-The dramatic oak staircase with wrought iron spindles leads to the upper level, where you'll find a generous loft area overlooking the main floor — perfect for a home office or family room. The primary bedroom suite includes a luxurious ensuite with dual vanities and quartz counters.
+Experience refined living in this stunning detached Luxury Bungaloft located just minutes from the heart of Prince Edward County. Featuring 5 bedrooms and 4 bathrooms, this executive home offers an exceptional layout designed for both comfort and elegance.
 
-Situated in a new development backing onto mature forest, just minutes from the historic Murray Canal and the Bay of Quinte, this home offers the perfect blend of modern living and natural beauty. Young's Cove is ideal for families seeking space, quality construction, and a vibrant waterfront community.`;
+Situated on a premium 72.3 ft x 147 ft lot, the property boasts an expansive, private backyard — perfect for outdoor entertaining, a future pool, or a serene private oasis. This home comes with upscale finishes, timeless craftsmanship, and an abundance of natural light throughout.
+
+The main floor offers an open-concept living and dining area, a chef-inspired kitchen, a luxurious primary suite, and additional bedrooms ideal for family or guests. The loft level provides added living space including 2 bedrooms, a full bathroom, a generous living area, and storage space.
+
+A rare offering in a highly desirable community close to Prince Edward County — surrounded by wineries, nature, beaches, trails, and the charm of PEC living.`;
 
 export type ImageCategory = "exterior" | "interior" | "kitchen" | "living" | "upper" | "bathroom" | "aerial" | "sunset";
 
@@ -62,14 +94,14 @@ export const IMAGES: PropertyImage[] = [
   { src: "/images/013_DON_8885_HDR.jpg", alt: "Kitchen with dark cabinetry and quartz countertops", category: "kitchen" },
   { src: "/images/014_DON_8886_HDR.jpg", alt: "Kitchen island detail", category: "kitchen" },
   { src: "/images/015_DON_8889_HDR.jpg", alt: "Kitchen island overlooking great room with fireplace", category: "kitchen" },
-  { src: "/images/016_DON_8892_HDR.jpg", alt: "Kitchen and dining area", category: "kitchen" },
+  { src: "/images/016_DON_8892_HDR.jpg", alt: "Kitchen and eating area", category: "kitchen" },
   { src: "/images/017_DON_8897_HDR.jpg", alt: "Kitchen workspace", category: "kitchen" },
   { src: "/images/018_DON_8900_HDR.jpg", alt: "Kitchen appliances and cabinetry", category: "kitchen" },
-  // Upper level
-  { src: "/images/019_DON_8906_HDR.jpg", alt: "Upper level loft overlooking great room", category: "upper" },
+  // Upper level / Loft
+  { src: "/images/019_DON_8906_HDR.jpg", alt: "Upper level loft overlooking great room — 15' x 19'", category: "upper" },
   { src: "/images/020_DON_8909_HDR.jpg", alt: "Upper level hallway", category: "upper" },
-  { src: "/images/021_DON_8915_HDR.jpg", alt: "Bedroom", category: "upper" },
-  { src: "/images/022_DON_8918_HDR.jpg", alt: "Primary bedroom", category: "upper" },
+  { src: "/images/021_DON_8915_HDR.jpg", alt: "Bedroom 4", category: "upper" },
+  { src: "/images/022_DON_8918_HDR.jpg", alt: "Bedroom 5", category: "upper" },
   // Open concept views
   { src: "/images/023_DON_8924_HDR.jpg", alt: "Great room with oversized windows and hardwood", category: "living" },
   { src: "/images/024_DON_8927_HDR.jpg", alt: "Main floor hallway", category: "interior" },
@@ -82,7 +114,7 @@ export const IMAGES: PropertyImage[] = [
   { src: "/images/029_DON_8859_3.jpg", alt: "Rear exterior at dusk", category: "sunset" },
   { src: "/images/030_DON_8860_2.jpg", alt: "Backyard at twilight", category: "sunset" },
   { src: "/images/031_DON_8861_1.jpg", alt: "Exterior evening glow", category: "sunset" },
-  { src: "/images/032_DON_9118_HDR_2.jpg", alt: "Rear exterior at golden hour — brick and stone", category: "sunset" },
+  { src: "/images/032_DON_9118_HDR_2.jpg", alt: "Rear exterior at golden hour — brick and stone with large windows", category: "sunset" },
   { src: "/images/033_DON_9123_HDR_2.jpg", alt: "Twilight exterior wide shot", category: "sunset" },
   { src: "/images/034_DON_9128_HDR_2.jpg", alt: "Evening exterior view", category: "sunset" },
   // Aerial / Drone
@@ -91,7 +123,7 @@ export const IMAGES: PropertyImage[] = [
   { src: "/images/037_DJI_20251017115021_0117_D___.jpg", alt: "Aerial — neighborhood from above", category: "aerial" },
   { src: "/images/038_DJI_20251017120206_0149_D___.jpg", alt: "Aerial — development and surrounding forest", category: "aerial" },
   { src: "/images/039_DJI_20251017120211_0150_D___.jpg", alt: "Aerial — community with water views", category: "aerial" },
-  { src: "/images/040_DJI_20251017120317_0154_D___.jpg", alt: "Aerial — homes backing onto forest", category: "aerial" },
+  { src: "/images/040_DJI_20251017120317_0154_D___.jpg", alt: "Aerial — homes backing onto greenbelt", category: "aerial" },
   { src: "/images/041_DJI_20251017120413_0160_D___.jpg", alt: "Aerial — new construction homes in Young's Cove", category: "aerial" },
   { src: "/images/042_DJI_20251017120439_0162_D___.jpg", alt: "Aerial — streetscape", category: "aerial" },
   { src: "/images/043_DJI_20251017120534_0166_D___.jpg", alt: "Aerial — community overview", category: "aerial" },
@@ -118,11 +150,25 @@ export const YOUTUBE_VIDEO_ID = "IHyXb7Thkt0";
 
 export const AGENTS = [
   {
-    name: "Listing Agent",
-    title: "Real Estate Agent",
-    brokerage: "Brokerage",
-    phone: "(613) 000-0000",
-    email: "agent@example.com",
+    name: "Julia Cresiun",
+    title: "Salesperson",
+    brokerage: "Right at Home Realty",
+    brokerageAddress: "16850 Yonge Street #6B, Newmarket, ON L3Y 0A3",
+    phone: "416-821-1343",
+    officePhone: "905-953-0550",
+    email: null as string | null,
+    website: true,
+    photo: null as string | null,
+  },
+  {
+    name: "Ashot Kagramaniants",
+    title: "Salesperson",
+    brokerage: "Right at Home Realty",
+    brokerageAddress: "16850 Yonge Street #6B, Newmarket, ON L3Y 0A3",
+    phone: "647-400-4338",
+    officePhone: "905-953-0550",
+    email: null as string | null,
+    website: false,
     photo: null as string | null,
   },
 ];

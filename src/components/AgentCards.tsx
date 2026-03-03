@@ -11,7 +11,7 @@ export default function AgentCards() {
           </p>
         </div>
 
-        <div className={`grid gap-6 max-w-3xl mx-auto ${AGENTS.length > 1 ? "sm:grid-cols-2" : "max-w-sm"}`}>
+        <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
           {AGENTS.map((agent, i) => (
             <div
               key={i}
@@ -33,7 +33,8 @@ export default function AgentCards() {
 
               <h3 className="text-lg font-bold text-foreground">{agent.name}</h3>
               <p className="text-sm text-muted">{agent.title}</p>
-              <p className="text-xs text-muted mt-1">{agent.brokerage}</p>
+              <p className="text-xs text-primary font-medium mt-1">{agent.brokerage}</p>
+              <p className="text-xs text-muted mt-0.5">{agent.brokerageAddress}</p>
 
               <div className="mt-4 space-y-2 w-full">
                 <a
@@ -45,15 +46,17 @@ export default function AgentCards() {
                   </svg>
                   {agent.phone}
                 </a>
-                <a
-                  href={`mailto:${agent.email}`}
-                  className="flex items-center justify-center gap-2 w-full py-2.5 border-2 border-primary text-primary text-sm font-medium rounded-lg hover:bg-primary hover:text-white transition-colors"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  Email Agent
-                </a>
+                {agent.officePhone && agent.officePhone !== agent.phone && (
+                  <a
+                    href={`tel:${agent.officePhone.replace(/[^0-9+]/g, "")}`}
+                    className="flex items-center justify-center gap-2 w-full py-2.5 border-2 border-primary text-primary text-sm font-medium rounded-lg hover:bg-primary hover:text-white transition-colors"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                    Office: {agent.officePhone}
+                  </a>
+                )}
               </div>
             </div>
           ))}
