@@ -314,7 +314,7 @@ const IMAGES_30WW: PropertyImage[] = [
   { src: "/30 Wellers Way Images/26-30-wellers-bathroom.jpg", alt: "Primary ensuite — freestanding tub, marble tile, elegant lighting", category: "bathroom" },
   // Bedrooms
   { src: "/30 Wellers Way Images/27-30-wellers-bedroom.jpg", alt: "Bedroom 2 — main floor, green accents, countryside window views", category: "bedroom" },
-  { src: "/30 Wellers Way Images/28-30-wellers-bedroom.jpg", alt: "Bedroom 2 — alternate angle with nightstands and warm lighting", category: "bedroom" },
+  { src: "/30 Wellers Way Images/28-30-wellers-bedroom.jpg", alt: "Bedroom 3 — alternate angle with nightstands and warm lighting", category: "bedroom" },
   { src: "/30 Wellers Way Images/29-30-wellers-bedroom.jpg", alt: "Bedroom 3 — main floor, staged with neutral tones, large window", category: "bedroom" },
   { src: "/30 Wellers Way Images/30-30-wellers-bedroom.jpg", alt: "Bedroom 3 — alternate angle showing closet and window views", category: "bedroom" },
   { src: "/30 Wellers Way Images/31-30-wellers-bedroom.jpg", alt: "Bedroom 4 — upper level, hardwood floors, window with water views", category: "bedroom" },
