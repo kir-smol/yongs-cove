@@ -381,7 +381,7 @@ const LISTING_30WW: PropertyListing = {
     daysOnMarket: 18,
     builder: "Briarwood Homes",
     garageLabel: "Attached Garage",
-    lotDisplayLabel: "2–4.99 acres",
+    lotDisplayLabel: "180.8 x 619.6 ft",
   },
   rooms: [
     { level: "Main Level", name: "Great Room", dimensions: "3.94m x 7.90m", imperial: "12'11\" x 25'11\"" },
@@ -1095,7 +1095,7 @@ const LISTING_42WW: PropertyListing = {
     daysOnMarket: 19,
     builder: "Briarwood Homes",
     garageLabel: "Attached Garage",
-    lotDisplayLabel: "1.88 acres",
+    lotDisplayLabel: "156.6 x 539.3 ft",
   },
   rooms: [
     { level: "Main Level", name: "Great Room", dimensions: "5.82m x 4.55m", imperial: "19'1\" x 14'11\"" },
