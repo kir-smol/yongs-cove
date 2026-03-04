@@ -1,10 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  const isListingPage = pathname.startsWith("/properties/");
+
+  const galleryHref = isListingPage ? "#gallery" : "/gallery";
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border">
@@ -28,12 +33,14 @@ export default function Header() {
             <Link href="/#listings" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
               Listings
             </Link>
-            <a href="#gallery" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+            <Link href={galleryHref} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
               Gallery
-            </a>
-            <a href="#details" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              Details
-            </a>
+            </Link>
+            {isListingPage && (
+              <a href="#details" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+                Details
+              </a>
+            )}
             <a href="#agents" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
               Agents
             </a>
@@ -65,8 +72,10 @@ export default function Header() {
         <div className="md:hidden bg-white border-t border-border">
           <div className="px-4 py-4 space-y-3">
             <Link href="/#listings" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-foreground py-2">Listings</Link>
-            <a href="#gallery" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-foreground py-2">Gallery</a>
-            <a href="#details" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-foreground py-2">Details</a>
+            <Link href={galleryHref} onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-foreground py-2">Gallery</Link>
+            {isListingPage && (
+              <a href="#details" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-foreground py-2">Details</a>
+            )}
             <a href="#agents" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-foreground py-2">Agents</a>
             <a
               href="#contact"
