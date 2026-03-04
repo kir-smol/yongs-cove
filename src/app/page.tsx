@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
+import AgentCards from "@/components/AgentCards";
+import HomeContactForm from "@/components/HomeContactForm";
 import Footer from "@/components/Footer";
-import { ALL_LISTINGS } from "@/data/properties";
+import { ALL_LISTINGS, SHARED_AGENTS } from "@/data/properties";
 
 export default function Home() {
   return (
@@ -27,7 +29,7 @@ export default function Home() {
             </div>
 
             {/* Listing cards */}
-            <div id="listings" className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div id="listings" className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
               {ALL_LISTINGS.map((listing) => {
                 const { property, images } = listing;
                 return (
@@ -43,7 +45,7 @@ export default function Home() {
                         alt={property.address}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, 50vw"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         priority
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
@@ -135,6 +137,12 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Agents */}
+        <AgentCards agents={SHARED_AGENTS} propertyAddress="Young's Cove" />
+
+        {/* Contact form */}
+        <HomeContactForm />
       </main>
       <Footer />
     </>

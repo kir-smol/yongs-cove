@@ -55,7 +55,6 @@ export default async function PropertyPage({ params }: PageProps) {
       <main>
         <Hero listing={listing} />
         <VideoSection youtubeVideoId={youtubeVideoId} />
-        <Gallery images={images} />
         <PropertyDetails
           property={property}
           rooms={rooms}
@@ -64,6 +63,7 @@ export default async function PropertyPage({ params }: PageProps) {
         />
         <AgentCards agents={agents} propertyAddress={property.address} />
         <LeadForm property={property} />
+        <Gallery images={images} />
       </main>
       <Footer property={property} />
     </>

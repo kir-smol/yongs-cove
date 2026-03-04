@@ -1068,7 +1068,7 @@ const LISTING_42WW: PropertyListing = {
     lotAcreage: "1.88 acres",
     lotFrontage: "156 ft 7 in",
     lotDepth: "539 ft 3 in",
-    yearBuilt: "0–5 Years",
+    yearBuilt: "New Construction",
     parking: "Attached Garage",
     totalParkingSpaces: 9,
     heating: "Forced Air (Natural Gas)",

@@ -25,9 +25,9 @@ export default function Header() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#listings" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+            <Link href="/#listings" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
               Listings
-            </a>
+            </Link>
             <a href="#gallery" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
               Gallery
             </a>
@@ -64,7 +64,7 @@ export default function Header() {
       {mobileOpen && (
         <div className="md:hidden bg-white border-t border-border">
           <div className="px-4 py-4 space-y-3">
-            <a href="#listings" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-foreground py-2">Listings</a>
+            <Link href="/#listings" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-foreground py-2">Listings</Link>
             <a href="#gallery" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-foreground py-2">Gallery</a>
             <a href="#details" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-foreground py-2">Details</a>
             <a href="#agents" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-foreground py-2">Agents</a>
