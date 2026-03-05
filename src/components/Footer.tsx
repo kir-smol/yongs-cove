@@ -25,8 +25,10 @@ export default function Footer({ property }: FooterProps) {
           <div>
             <h4 className="font-semibold text-white mb-3">Quick Links</h4>
             <ul className="space-y-2 text-sm text-white/60">
-              <li><a href="#gallery" className="hover:text-white transition-colors">Gallery</a></li>
-              <li><a href="#details" className="hover:text-white transition-colors">Property Details</a></li>
+              <li><a href={property ? "#gallery" : "/gallery"} className="hover:text-white transition-colors">Gallery</a></li>
+              {property && (
+                <li><a href="#details" className="hover:text-white transition-colors">Property Details</a></li>
+              )}
               <li><a href="#agents" className="hover:text-white transition-colors">Our Agents</a></li>
               <li><a href="#contact" className="hover:text-white transition-colors">Contact</a></li>
             </ul>
