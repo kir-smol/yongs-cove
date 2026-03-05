@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { sendCAPIEvent } from "@/lib/facebook-capi";
 
 const GHL_WEBHOOK_URL = process.env.GHL_WEBHOOK_URL;
 
@@ -6,7 +7,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const { firstName, lastName, email, phone, interest, message } = body;
+    const { firstName, lastName, email, phone, interest, message, listing, eventId, sourceUrl, fbc, fbp } = body;
 
     if (!firstName || !lastName || !email || !phone) {
       return NextResponse.json(
@@ -15,6 +16,28 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // --- Facebook Conversions API: Lead event (server-side) ---
+    sendCAPIEvent({
+      eventName: "Lead",
+      eventSourceUrl: sourceUrl || req.headers.get("referer") || undefined,
+      eventId,
+      userData: {
+        email,
+        phone,
+        firstName,
+        lastName,
+        clientIpAddress: req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || undefined,
+        clientUserAgent: req.headers.get("user-agent") || undefined,
+        fbc,
+        fbp,
+      },
+      customData: {
+        content_name: listing ? `${listing} Inquiry` : "General Inquiry",
+        content_category: "Real Estate",
+      },
+    }).catch((err) => console.error("CAPI Lead error:", err));
+
+    // --- GHL Webhook ---
     if (!GHL_WEBHOOK_URL) {
       console.warn("GHL_WEBHOOK_URL not set — lead logged only:", body);
       return NextResponse.json({ ok: true, warn: "webhook_not_configured" });
@@ -30,7 +53,7 @@ export async function POST(req: NextRequest) {
       customField: {
         interest: interest || "",
         message: message || "",
-        listing: "13 East Vista Terrace, Quinte West",
+        listing: listing || "General Inquiry",
       },
     };
 

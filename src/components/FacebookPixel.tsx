@@ -40,6 +40,20 @@ export default function FacebookPixel() {
   );
 }
 
+/* ─── Cookie helpers for deduplication ─── */
+
+function getCookie(name: string): string | undefined {
+  if (typeof document === "undefined") return undefined;
+  const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+  return match ? decodeURIComponent(match[1]) : undefined;
+}
+
+function generateEventId(): string {
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+}
+
+/* ─── Browser Pixel tracking ─── */
+
 export function trackEvent(eventName: string, params?: Record<string, unknown>) {
   if (typeof window !== "undefined" && window.fbq) {
     window.fbq("track", eventName, params);
@@ -50,4 +64,49 @@ export function trackCustomEvent(eventName: string, params?: Record<string, unkn
   if (typeof window !== "undefined" && window.fbq) {
     window.fbq("trackCustom", eventName, params);
   }
+}
+
+/* ─── Dual tracking: Browser Pixel + Server CAPI ─── */
+
+/**
+ * Send a Contact event (phone click) to both browser pixel and server CAPI.
+ */
+export function trackPhoneClick(contentName: string) {
+  const eventId = generateEventId();
+
+  // Browser-side pixel
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq("track", "Contact", {
+      content_name: contentName,
+      content_category: "Phone Call",
+      eventID: eventId,
+    });
+  }
+
+  // Server-side CAPI
+  fetch("/api/fb-event", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      eventName: "Contact",
+      contentName,
+      contentCategory: "Phone Call",
+      eventId,
+      sourceUrl: window.location.href,
+      fbc: getCookie("_fbc"),
+      fbp: getCookie("_fbp"),
+    }),
+  }).catch((err) => console.error("CAPI phone event error:", err));
+}
+
+/**
+ * Get deduplication params for Lead events (used by forms before submitting to /api/lead).
+ */
+export function getLeadEventMeta() {
+  return {
+    eventId: generateEventId(),
+    sourceUrl: typeof window !== "undefined" ? window.location.href : "",
+    fbc: getCookie("_fbc") || "",
+    fbp: getCookie("_fbp") || "",
+  };
 }

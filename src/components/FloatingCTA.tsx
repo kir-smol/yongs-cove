@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import type { Agent } from "@/data/properties";
+import { trackPhoneClick } from "./FacebookPixel";
 
 interface FloatingCTAProps {
   agents: Agent[];
@@ -24,6 +25,7 @@ export default function FloatingCTA({ agents }: FloatingCTAProps) {
   return (
     <a
       href={`tel:${phoneRaw}`}
+      onClick={() => trackPhoneClick(`Call ${julia.name} (Floating)`)}
       className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-5 py-3.5 bg-primary hover:bg-primary-light text-white font-semibold text-sm rounded-full shadow-xl shadow-primary/30 transition-all duration-300 animate-slide-up"
     >
       <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">

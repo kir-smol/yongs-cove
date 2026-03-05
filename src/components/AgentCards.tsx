@@ -1,4 +1,7 @@
+"use client";
+
 import type { Agent } from "@/data/properties";
+import { trackPhoneClick } from "./FacebookPixel";
 
 interface AgentCardsProps {
   agents: Agent[];
@@ -44,6 +47,7 @@ export default function AgentCards({ agents, propertyAddress }: AgentCardsProps)
               <div className="mt-4 space-y-2 w-full">
                 <a
                   href={`tel:${agent.phone.replace(/[^0-9+]/g, "")}`}
+                  onClick={() => trackPhoneClick(`Call ${agent.name}`)}
                   className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary hover:bg-primary-light text-white text-sm font-medium rounded-lg transition-colors"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -54,6 +58,7 @@ export default function AgentCards({ agents, propertyAddress }: AgentCardsProps)
                 {agent.officePhone && agent.officePhone !== agent.phone && (
                   <a
                     href={`tel:${agent.officePhone.replace(/[^0-9+]/g, "")}`}
+                    onClick={() => trackPhoneClick(`Call Office ${agent.name}`)}
                     className="flex items-center justify-center gap-2 w-full py-2.5 border-2 border-primary text-primary text-sm font-medium rounded-lg hover:bg-primary hover:text-white transition-colors"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

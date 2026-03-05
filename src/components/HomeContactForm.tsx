@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { trackEvent } from "./FacebookPixel";
+import { trackEvent, trackPhoneClick, getLeadEventMeta } from "./FacebookPixel";
 import { SHARED_AGENTS } from "@/data/properties";
 
 export default function HomeContactForm() {
@@ -15,17 +15,26 @@ export default function HomeContactForm() {
 
     const form = e.currentTarget;
     const data = new FormData(form);
+    const meta = getLeadEventMeta();
 
     trackEvent("Lead", {
       content_name: "General Inquiry",
       content_category: "Real Estate",
+      eventID: meta.eventId,
     });
 
     try {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(data)),
+        body: JSON.stringify({
+          ...Object.fromEntries(data),
+          listing: "General Inquiry",
+          eventId: meta.eventId,
+          sourceUrl: meta.sourceUrl,
+          fbc: meta.fbc,
+          fbp: meta.fbp,
+        }),
       });
 
       if (!res.ok) throw new Error("submit failed");
@@ -107,7 +116,7 @@ export default function HomeContactForm() {
                 <div>
                   <p className="font-semibold text-foreground">Call Us Directly</p>
                   <p className="text-sm text-muted">
-                    <a href={`tel:${agent.phone}`} className="text-primary hover:underline">{agent.phone}</a>
+                    <a href={`tel:${agent.phone}`} onClick={() => trackPhoneClick(`Call ${agent.name}`)} className="text-primary hover:underline">{agent.phone}</a>
                   </p>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { trackEvent } from "./FacebookPixel";
+import { trackEvent, getLeadEventMeta } from "./FacebookPixel";
 import type { PropertyData } from "@/data/properties";
 
 interface LeadFormProps {
@@ -18,19 +18,28 @@ export default function LeadForm({ property }: LeadFormProps) {
 
     const form = e.currentTarget;
     const data = new FormData(form);
+    const meta = getLeadEventMeta();
 
     trackEvent("Lead", {
       content_name: `${property.address} Inquiry`,
       content_category: "Real Estate",
       value: property.priceNum,
       currency: "CAD",
+      eventID: meta.eventId,
     });
 
     try {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(data)),
+        body: JSON.stringify({
+          ...Object.fromEntries(data),
+          listing: `${property.address}, ${property.city}`,
+          eventId: meta.eventId,
+          sourceUrl: meta.sourceUrl,
+          fbc: meta.fbc,
+          fbp: meta.fbp,
+        }),
       });
 
       if (!res.ok) throw new Error("submit failed");
