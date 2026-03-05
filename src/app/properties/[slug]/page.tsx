@@ -61,8 +61,8 @@ export default async function PropertyPage({ params }: PageProps) {
           description={description}
           highlights={highlights}
         />
-        <AgentCards agents={agents} propertyAddress={property.address} />
         <LeadForm property={property} />
+        <AgentCards agents={agents} propertyAddress={property.address} />
         <Gallery images={images} />
       </main>
       <Footer property={property} />

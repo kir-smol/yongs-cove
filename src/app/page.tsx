@@ -148,11 +148,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Agents */}
-        <AgentCards agents={SHARED_AGENTS} propertyAddress="Young's Cove" />
-
         {/* Contact form */}
         <HomeContactForm />
+
+        {/* Agents */}
+        <AgentCards agents={SHARED_AGENTS} propertyAddress="Young's Cove" />
       </main>
       <Footer />
     </>
