@@ -28,6 +28,16 @@ export default function Home() {
               </p>
             </div>
 
+            {/* Mobile Book a Viewing button */}
+            <div className="md:hidden mb-6">
+              <a
+                href="#contact"
+                className="block w-full text-center px-5 py-3.5 bg-primary hover:bg-primary-light text-white font-semibold rounded-lg transition-colors"
+              >
+                Book a Viewing
+              </a>
+            </div>
+
             {/* Listing cards */}
             <div id="listings" className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
               {ALL_LISTINGS.map((listing) => {
