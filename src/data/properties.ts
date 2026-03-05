@@ -3,7 +3,6 @@
 export type ImageCategory =
   | "exterior"
   | "interior"
-  | "upper"
   | "bedroom"
   | "bathroom"
   | "aerial";
@@ -105,7 +104,6 @@ export const IMAGE_CATEGORIES: { key: ImageCategory; label: string }[] = [
   { key: "interior", label: "Interior" },
   { key: "bedroom", label: "Bedrooms" },
   { key: "bathroom", label: "Bathrooms" },
-  { key: "upper", label: "Upper Level" },
   { key: "aerial", label: "Aerial" },
 ];
 
@@ -168,8 +166,8 @@ const IMAGES_13EVT: PropertyImage[] = [
   { src: "/images/20-bedroom-3.jpg", alt: "Bedroom 5 — upper level", category: "bedroom" },
   { src: "/images/21-bedroom-3.jpg", alt: "Bedroom 5 — alternate angle", category: "bedroom" },
   // Upper level / Loft
-  { src: "/images/17-upper-floor.jpg", alt: "Upper level loft — staged as living area, 15' x 19'", category: "upper" },
-  { src: "/images/18-upper-floor.jpg", alt: "Upper level loft — overlooking great room", category: "upper" },
+  { src: "/images/17-upper-floor.jpg", alt: "Upper level loft — staged as living area, 15' x 19'", category: "interior" },
+  { src: "/images/18-upper-floor.jpg", alt: "Upper level loft — overlooking great room", category: "interior" },
   // Bathrooms
   { src: "/images/19-bathroom-2.jpg", alt: "Upper level bathroom", category: "bathroom" },
   // Aerial
@@ -300,8 +298,8 @@ const IMAGES_30WW: PropertyImage[] = [
   // Dining & staircase
   { src: "/30 Wellers Way Images/19-30-wellers-interior-16.jpg", alt: "Dining area — staircase to loft, double-height windows", category: "interior" },
   // Upper level / Loft
-  { src: "/30 Wellers Way Images/20-30-wellers-interior-17.jpg", alt: "Upper level loft — sectional sofa, iron and oak railing", category: "upper" },
-  { src: "/30 Wellers Way Images/21-30-wellers-interior-18.jpg", alt: "Upper level loft — overlooking great room", category: "upper" },
+  { src: "/30 Wellers Way Images/20-30-wellers-interior-17.jpg", alt: "Upper level loft — sectional sofa, iron and oak railing", category: "interior" },
+  { src: "/30 Wellers Way Images/21-30-wellers-interior-18.jpg", alt: "Upper level loft — overlooking great room", category: "interior" },
   // Primary suite
   { src: "/30 Wellers Way Images/22-30-wellers-master-bedroom.jpg", alt: "Primary bedroom — tray ceiling, ensuite access, hardwood", category: "bedroom" },
   { src: "/30 Wellers Way Images/23-30-wellers-master-bedroom.jpg", alt: "Primary bedroom — alternate angle", category: "bedroom" },
@@ -441,7 +439,7 @@ const IMAGES_2BHD: PropertyImage[] = [
   { src: "/2 BLUE HERON DRIVE/9-2-Blue-Heron-Drive-Bedroom-1.jpg", alt: "Primary bedroom — spacious layout, hardwood", category: "bedroom" },
   { src: "/2 BLUE HERON DRIVE/10-2-Blue-Heron-Drive-Bedroom-1.jpg", alt: "Primary bedroom — alternate angle", category: "bedroom" },
   { src: "/2 BLUE HERON DRIVE/11-2-Blue-Heron-Drive-Bedroom-2.jpg", alt: "Bedroom 2 — natural light, hardwood", category: "bedroom" },
-  { src: "/2 BLUE HERON DRIVE/12-2-Blue-Heron-Drive-interior.jpg", alt: "Loft — open living space, railing", category: "upper" },
+  { src: "/2 BLUE HERON DRIVE/12-2-Blue-Heron-Drive-interior.jpg", alt: "Loft — open living space, railing", category: "interior" },
   { src: "/2 BLUE HERON DRIVE/13-2-Blue-Heron-Drive-Bedroom-3.jpg", alt: "Bedroom 3 — bright, large window", category: "bedroom" },
   { src: "/2 BLUE HERON DRIVE/14-2-Blue-Heron-Drive-laundry.jpg", alt: "Laundry room — washer and dryer, cabinetry", category: "interior" },
   { src: "/2 BLUE HERON DRIVE/15-2-Blue-Heron-Drive-backyard.jpg", alt: "Backyard — expansive private lot", category: "exterior" },
@@ -550,7 +548,7 @@ const IMAGES_18BHD: PropertyImage[] = [
   { src: "/18 BLUE HERON DRIVE/7-18-Blue-Heron-Drive-interior.jpg", alt: "Kitchen — appliances, pendant lights", category: "interior" },
   { src: "/18 BLUE HERON DRIVE/8-18-Blue-Heron-Drive-interior.jpg", alt: "Dining area — open to kitchen", category: "interior" },
   { src: "/18 BLUE HERON DRIVE/9-18-Blue-Heron-Drive-interior.jpg", alt: "Staircase — hardwood, iron railing", category: "interior" },
-  { src: "/18 BLUE HERON DRIVE/10-18-Blue-Heron-Drive-interior.jpg", alt: "Loft — open living space, railing", category: "upper" },
+  { src: "/18 BLUE HERON DRIVE/10-18-Blue-Heron-Drive-interior.jpg", alt: "Loft — open living space, railing", category: "interior" },
   { src: "/18 BLUE HERON DRIVE/11-18-Blue-Heron-Drive-bedroom.jpg", alt: "Bedroom — spacious, hardwood floors", category: "bedroom" },
   { src: "/18 BLUE HERON DRIVE/12-18-Blue-Heron-Drive-bedroom.jpg", alt: "Bedroom — bright, large window", category: "bedroom" },
   { src: "/18 BLUE HERON DRIVE/13-18-Blue-Heron-Drive-bathroom.jpg", alt: "Bathroom — vanity, modern tile", category: "bathroom" },
@@ -793,8 +791,8 @@ const IMAGES_12LPD: PropertyImage[] = [
   { src: "/12 LARISSA PARK DRIVE/7-12-larissa-park-drive-interior.jpg", alt: "Interior — hallway, hardwood floors", category: "interior" },
   { src: "/12 LARISSA PARK DRIVE/8-12-larissa-park-drive-interior.jpg", alt: "Bathroom — vanity, modern finishes", category: "bathroom" },
   { src: "/12 LARISSA PARK DRIVE/9-12-larissa-park-drive-interior.jpg", alt: "Ensuite — spa-style, dual vanity", category: "bathroom" },
-  { src: "/12 LARISSA PARK DRIVE/10-12-larissa-park-drive-interior.jpg", alt: "Interior — loft area, railing", category: "upper" },
-  { src: "/12 LARISSA PARK DRIVE/11-12-larissa-park-drive-interior.jpg", alt: "Upper level loft — open living space", category: "upper" },
+  { src: "/12 LARISSA PARK DRIVE/10-12-larissa-park-drive-interior.jpg", alt: "Interior — loft area, railing", category: "interior" },
+  { src: "/12 LARISSA PARK DRIVE/11-12-larissa-park-drive-interior.jpg", alt: "Upper level loft — open living space", category: "interior" },
   { src: "/12 LARISSA PARK DRIVE/12-12-larissa-park-drive-interior.jpg", alt: "Interior — staircase, hardwood", category: "interior" },
   { src: "/12 LARISSA PARK DRIVE/13-12-larissa-park-drive-bedroom-1.jpg", alt: "Primary bedroom — spacious, walk-in closet", category: "bedroom" },
   { src: "/12 LARISSA PARK DRIVE/14-12-larissa-park-drive-bedroom-1.jpg", alt: "Primary bedroom — alternate angle", category: "bedroom" },
@@ -1016,7 +1014,7 @@ const IMAGES_42WW: PropertyImage[] = [
   { src: "/42 WELLERS WAY/9-42-wellers-way-interior.jpg", alt: "Library — built-in shelving, hardwood", category: "interior" },
   { src: "/42 WELLERS WAY/10-42-wellers-way-interior.jpg", alt: "Interior — hallway, neutral finishes", category: "interior" },
   { src: "/42 WELLERS WAY/11-42-wellers-way-interior.jpg", alt: "Staircase — hardwood, iron railing", category: "interior" },
-  { src: "/42 WELLERS WAY/12-42-wellers-way-interior.jpg", alt: "Upper level loft — open living space", category: "upper" },
+  { src: "/42 WELLERS WAY/12-42-wellers-way-interior.jpg", alt: "Upper level loft — open living space", category: "interior" },
   { src: "/42 WELLERS WAY/13-42-wellers-way-interior.jpg", alt: "Interior — mudroom, tile flooring", category: "interior" },
   { src: "/42 WELLERS WAY/14-42-wellers-way-bathroom.jpg", alt: "Bathroom — half bath, modern finishes", category: "bathroom" },
   { src: "/42 WELLERS WAY/15-42-wellers-way-interior.jpg", alt: "Laundry room — cabinetry, tile floor", category: "interior" },

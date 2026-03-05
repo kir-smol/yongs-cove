@@ -34,11 +34,15 @@ export default function GalleryPage() {
     }))
   );
 
-  const filtered = allImages.filter((img) => {
-    const catMatch = filter === "all" || img.category === filter;
-    const propMatch = propertyFilter === "all" || img.propertySlug === propertyFilter;
-    return catMatch && propMatch;
-  });
+  // Images filtered by property only (used for category counts)
+  const propertyFiltered = propertyFilter === "all"
+    ? allImages
+    : allImages.filter((img) => img.propertySlug === propertyFilter);
+
+  // Images filtered by both property and category
+  const filtered = filter === "all"
+    ? propertyFiltered
+    : propertyFiltered.filter((img) => img.category === filter);
 
   const openLightbox = (index: number) => {
     setActiveIndex(index);
@@ -113,11 +117,11 @@ export default function GalleryPage() {
                     : "bg-border/50 text-foreground hover:bg-border"
                 }`}
               >
-                All Categories ({filtered.length})
+                All Categories ({propertyFiltered.length})
               </button>
               {IMAGE_CATEGORIES.map((cat) => {
-                const count = filtered.filter((img) => img.category === cat.key).length;
-                if (count === 0 && filter !== cat.key) return null;
+                const count = propertyFiltered.filter((img) => img.category === cat.key).length;
+                if (count === 0) return null;
                 return (
                   <button
                     key={cat.key}
