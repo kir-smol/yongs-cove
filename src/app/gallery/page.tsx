@@ -5,7 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ALL_LISTINGS, IMAGE_CATEGORIES, type ImageCategory } from "@/data/properties";
+import AgentCards from "@/components/AgentCards";
+import HomeContactForm from "@/components/HomeContactForm";
+import { ALL_LISTINGS, SHARED_AGENTS, IMAGE_CATEGORIES, type ImageCategory } from "@/data/properties";
 
 interface GalleryImage {
   src: string;
@@ -161,6 +163,9 @@ export default function GalleryPage() {
             )}
           </div>
         </section>
+
+        <AgentCards agents={SHARED_AGENTS} propertyAddress="Young's Cove" />
+        <HomeContactForm />
       </main>
       <Footer />
 
