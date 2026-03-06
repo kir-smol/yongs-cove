@@ -10,6 +10,7 @@ import AgentCards from "@/components/AgentCards";
 import LeadForm from "@/components/LeadForm";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
+import SimilarProperties from "@/components/SimilarProperties";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -64,6 +65,7 @@ export default async function PropertyPage({ params }: PageProps) {
         <LeadForm property={property} />
         <AgentCards agents={agents} propertyAddress={property.address} />
         <Gallery images={images} />
+        <SimilarProperties currentSlug={property.slug} />
       </main>
       <Footer property={property} />
     </>
