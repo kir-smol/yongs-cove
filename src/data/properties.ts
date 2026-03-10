@@ -63,6 +63,7 @@ export interface PropertyData {
   cooling: string;
   fireplace: string;
   basement: string;
+  loft?: string;
   exteriorFinish: string;
   flooring: string;
   foundation: string;
@@ -205,6 +206,7 @@ const LISTING_13EVT: PropertyListing = {
     cooling: "Central Air Conditioning",
     fireplace: "1",
     basement: "Crawl Space",
+    loft: "15' × 19'",
     exteriorFinish: "Brick & Stone",
     flooring: "Hardwood, Tile",
     foundation: "Concrete",
@@ -355,6 +357,7 @@ const LISTING_30WW: PropertyListing = {
     cooling: "Central Air Conditioning",
     fireplace: "1",
     basement: "Crawl Space",
+    loft: "11'9\" × 16'11\"",
     exteriorFinish: "Brick & Stone",
     flooring: "Hardwood",
     foundation: "Poured Concrete",
@@ -477,6 +480,7 @@ const LISTING_2BHD: PropertyListing = {
     cooling: "Central Air Conditioning",
     fireplace: "1",
     basement: "Crawl Space",
+    loft: "17'11\" × 13'9\"",
     exteriorFinish: "Brick & Stone",
     flooring: "Hardwood, Tile",
     foundation: "Concrete",
@@ -595,6 +599,7 @@ const LISTING_18BHD: PropertyListing = {
     cooling: "Central Air Conditioning",
     fireplace: "1",
     basement: "Crawl Space",
+    loft: "16'2\" × 13'7\"",
     exteriorFinish: "Brick & Stone",
     flooring: "Tile, Carpeted, Hardwood",
     foundation: "Concrete",
@@ -836,6 +841,7 @@ const LISTING_12LPD: PropertyListing = {
     cooling: "Central Air Conditioning",
     fireplace: "0",
     basement: "Unfinished",
+    loft: "11'4\" × 20'9\"",
     exteriorFinish: "Brick, Vinyl Siding",
     flooring: "Tile, Hardwood, Carpeted",
     foundation: "Poured Concrete",
@@ -1069,6 +1075,7 @@ const LISTING_42WW: PropertyListing = {
     cooling: "Central Air Conditioning",
     fireplace: "0",
     basement: "Unfinished",
+    loft: "18'2\" × 17'1\"",
     exteriorFinish: "Brick & Stone",
     flooring: "Laminate, Tile",
     foundation: "Poured Concrete",
@@ -1296,6 +1303,7 @@ const LISTING_71WW: PropertyListing = {
     cooling: "Central Air Conditioning",
     fireplace: "0",
     basement: "Unfinished",
+    loft: "18'2\" × 17'1\"",
     exteriorFinish: "Brick",
     flooring: "",
     foundation: "Poured Concrete",

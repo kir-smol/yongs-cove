@@ -79,6 +79,7 @@ export default function PropertyDetails({ property, rooms, description, highligh
     ["Fireplace", property.fireplace],
     ["Basement", property.basement],
   );
+  if (property.loft) summaryRows.push(["Loft", property.loft]);
   if (property.waterfront) summaryRows.push(["Waterfront", property.waterfront]);
   if (property.lotFeatures) summaryRows.push(["View", property.lotFeatures]);
   if (property.access) summaryRows.push(["Access", property.access]);
