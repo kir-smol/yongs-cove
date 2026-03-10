@@ -719,7 +719,7 @@ const LISTING_46EVT: PropertyListing = {
     heating: "Forced Air (Natural Gas)",
     cooling: "Central Air Conditioning, Air Exchanger",
     fireplace: "1",
-    basement: "Unfinished",
+    basement: "Full Height",
     exteriorFinish: "Brick",
     flooring: "Tile, Hardwood, Carpeted",
     foundation: "Concrete",
