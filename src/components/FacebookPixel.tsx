@@ -69,34 +69,48 @@ export function trackCustomEvent(eventName: string, params?: Record<string, unkn
 /* ─── Dual tracking: Browser Pixel + Server CAPI ─── */
 
 /**
- * Send a Contact event (phone click) to both browser pixel and server CAPI.
+ * Send Contact + Lead events (phone click) to both browser pixel and server CAPI.
  */
 export function trackPhoneClick(contentName: string) {
-  const eventId = generateEventId();
+  const contactEventId = generateEventId();
+  const leadEventId = generateEventId();
 
-  // Browser-side pixel
   if (typeof window !== "undefined" && window.fbq) {
+    // Browser-side Contact event
     window.fbq("track", "Contact", {
       content_name: contentName,
       content_category: "Phone Call",
-      eventID: eventId,
+      eventID: contactEventId,
+    });
+    // Browser-side Lead event
+    window.fbq("track", "Lead", {
+      content_name: contentName,
+      content_category: "Phone Call",
+      eventID: leadEventId,
     });
   }
 
-  // Server-side CAPI
+  const payload = {
+    contentName,
+    contentCategory: "Phone Call",
+    sourceUrl: typeof window !== "undefined" ? window.location.href : "",
+    fbc: getCookie("_fbc"),
+    fbp: getCookie("_fbp"),
+  };
+
+  // Server-side Contact CAPI
   fetch("/api/fb-event", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      eventName: "Contact",
-      contentName,
-      contentCategory: "Phone Call",
-      eventId,
-      sourceUrl: window.location.href,
-      fbc: getCookie("_fbc"),
-      fbp: getCookie("_fbp"),
-    }),
-  }).catch((err) => console.error("CAPI phone event error:", err));
+    body: JSON.stringify({ ...payload, eventName: "Contact", eventId: contactEventId }),
+  }).catch((err) => console.error("CAPI phone Contact event error:", err));
+
+  // Server-side Lead CAPI
+  fetch("/api/fb-event", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ...payload, eventName: "Lead", eventId: leadEventId }),
+  }).catch((err) => console.error("CAPI phone Lead event error:", err));
 }
 
 /**
