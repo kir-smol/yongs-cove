@@ -1,60 +1,82 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const isListingPage = pathname.startsWith("/properties/");
+  const isHome = pathname === "/";
 
-  const galleryHref = isListingPage ? "#gallery" : "/gallery";
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const transparent = isHome && !scrolled && !mobileOpen;
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        transparent
+          ? "bg-transparent"
+          : "bg-white/95 backdrop-blur-sm shadow-sm"
+      }`}
+    >
+      <div className="max-w-[1264px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary rounded-sm flex items-center justify-center">
-              <span className="text-white font-bold text-sm sm:text-lg">YC</span>
-            </div>
-            <div>
-              <span className="text-lg sm:text-xl font-semibold text-primary tracking-tight">
-                Young&apos;s Cove
-              </span>
-              <span className="hidden sm:block text-xs text-muted -mt-1">
-                Waterfront Living
-              </span>
-            </div>
+          {/* Logo */}
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/images/youngscove-logo.jpg"
+              alt="Young's Cove - Prince Edward Estates"
+              width={160}
+              height={96}
+              className="h-10 sm:h-14 w-auto transition-all duration-300"
+              priority
+            />
           </Link>
 
+          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
-            <Link href="/#listings" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              Listings
-            </Link>
-            <Link href={galleryHref} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              Gallery
-            </Link>
-            {isListingPage && (
-              <a href="#details" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                Details
-              </a>
-            )}
-            <a href="#agents" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              Agents
-            </a>
+            {[
+              { label: "Home", href: "/", isLink: true },
+              { label: "Gallery", href: "/gallery", isLink: true },
+              { label: "Collections", href: "#collections", isLink: false },
+              { label: "Agents", href: "#agents", isLink: false },
+            ].map((item) => {
+              const cls = `text-sm font-medium transition-colors ${
+                transparent
+                  ? "text-white/90 hover:text-white"
+                  : "text-foreground hover:text-btn"
+              }`;
+              return item.isLink ? (
+                <Link key={item.label} href={item.href} className={cls}>{item.label}</Link>
+              ) : (
+                <a key={item.label} href={item.href} className={cls}>{item.label}</a>
+              );
+            })}
             <a
               href="#contact"
-              className="inline-flex items-center px-5 py-2.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-light transition-colors"
+              className={`px-6 py-2.5 text-sm font-semibold rounded-full transition-colors ${
+                transparent
+                  ? "bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 border border-white/30"
+                  : "bg-btn hover:bg-btn-hover text-white"
+              }`}
             >
-              Book a Viewing
+              Book a Visit
             </a>
           </nav>
 
+          {/* Mobile menu button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2 text-foreground"
+            className={`md:hidden p-2 ${transparent ? "text-white" : "text-foreground"}`}
             aria-label="Toggle menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,21 +90,20 @@ export default function Header() {
         </div>
       </div>
 
+      {/* Mobile menu */}
       {mobileOpen && (
         <div className="md:hidden bg-white border-t border-border">
-          <div className="px-4 py-4 space-y-3">
-            <Link href="/#listings" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-foreground py-2">Listings</Link>
-            <Link href={galleryHref} onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-foreground py-2">Gallery</Link>
-            {isListingPage && (
-              <a href="#details" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-foreground py-2">Details</a>
-            )}
-            <a href="#agents" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-foreground py-2">Agents</a>
+          <div className="px-4 py-4 space-y-1">
+            <Link href="/" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-medium text-foreground rounded-lg hover:bg-surface-warm">Home</Link>
+            <Link href="/gallery" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-medium text-foreground rounded-lg hover:bg-surface-warm">Gallery</Link>
+            <a href="#collections" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-medium text-foreground rounded-lg hover:bg-surface-warm">Collections</a>
+            <a href="#agents" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-medium text-foreground rounded-lg hover:bg-surface-warm">Agents</a>
             <a
               href="#contact"
               onClick={() => setMobileOpen(false)}
-              className="block text-center px-5 py-2.5 bg-primary text-white text-sm font-medium rounded-lg"
+              className="block text-center mt-2 px-5 py-3 bg-primary text-foreground text-sm font-semibold rounded-full"
             >
-              Book a Viewing
+              Book a Visit
             </a>
           </div>
         </div>
