@@ -37,7 +37,7 @@ export default function Header() {
               alt="Young's Cove - Prince Edward Estates"
               width={160}
               height={96}
-              className="h-10 sm:h-14 w-auto transition-all duration-300"
+              className="h-8 sm:h-14 w-auto transition-all duration-300"
               priority
             />
           </Link>

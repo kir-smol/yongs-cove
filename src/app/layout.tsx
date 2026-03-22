@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Lato, Inter, Archivo } from "next/font/google";
 import FacebookPixel from "@/components/FacebookPixel";
+import { PreloaderProvider } from "@/components/PreloaderContext";
 import "./globals.css";
 
 const lato = Lato({
@@ -44,7 +45,9 @@ export default function RootLayout({
         className={`${lato.variable} ${inter.variable} ${archivo.variable} antialiased font-sans`}
       >
         <FacebookPixel />
-        {children}
+        <PreloaderProvider>
+          {children}
+        </PreloaderProvider>
       </body>
     </html>
   );

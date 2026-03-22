@@ -18,7 +18,7 @@ export default function Home() {
         <HeroVideo />
 
         {/* WHY CHOOSE US */}
-        <section className="py-20 sm:py-28 bg-surface">
+        <section className="py-14 sm:py-20 lg:py-28 bg-surface">
           <div className="max-w-[1264px] mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
               {/* Left column: text + image */}
@@ -29,7 +29,7 @@ export default function Home() {
                   </p>
                 </FadeInUp>
                 <FadeInUp delay={100}>
-                  <h2 className="font-heading text-4xl sm:text-5xl font-normal text-foreground leading-[1.16] tracking-tight">
+                  <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-normal text-foreground leading-[1.16] tracking-tight">
                     The Smart Choice for Lakefront Living in Ontario
                   </h2>
                 </FadeInUp>
@@ -41,7 +41,7 @@ export default function Home() {
                 <FadeInUp delay={300}>
                   <div className="mt-8 relative aspect-[16/11] rounded-2xl overflow-hidden">
                     <Image
-                      src="/images/24-arial.jpg"
+                      src="/images/aerial-summer.jpg"
                       alt="Young's Cove aerial view"
                       fill
                       className="object-cover rounded-2xl"
@@ -52,7 +52,7 @@ export default function Home() {
               </div>
 
               {/* Right column: 2x2 grid of numbered tiles */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
                   {
                     num: "01",
@@ -91,21 +91,21 @@ export default function Home() {
 
             {/* STAT BAR */}
             <FadeInUp>
-              <div className="grid grid-cols-3 gap-8 text-center">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
                 <div>
-                  <p className="font-heading text-5xl sm:text-6xl lg:text-7xl font-normal text-foreground tracking-tight">
+                  <p className="font-heading text-4xl sm:text-5xl lg:text-7xl font-normal text-foreground tracking-tight">
                     <AnimatedCounter target={7000} duration={900} />
                   </p>
                   <p className="mt-2 text-muted text-sm sm:text-base font-medium font-label">ft of shoreline</p>
                 </div>
                 <div>
-                  <p className="font-heading text-5xl sm:text-6xl lg:text-7xl font-normal text-foreground tracking-tight">
+                  <p className="font-heading text-4xl sm:text-5xl lg:text-7xl font-normal text-foreground tracking-tight">
                     <AnimatedCounter target={242} duration={2000} />
                   </p>
                   <p className="mt-2 text-muted text-sm sm:text-base font-medium font-label">homesites</p>
                 </div>
                 <div>
-                  <p className="font-heading text-5xl sm:text-6xl lg:text-7xl font-normal text-foreground tracking-tight">
+                  <p className="font-heading text-4xl sm:text-5xl lg:text-7xl font-normal text-foreground tracking-tight">
                     <AnimatedCounter target={28} suffix="+" duration={2000} />
                   </p>
                   <p className="mt-2 text-muted text-sm sm:text-base font-medium font-label">years</p>
@@ -116,10 +116,10 @@ export default function Home() {
         </section>
 
         {/* COLLECTIONS */}
-        <section id="collections" className="py-20 sm:py-28 bg-surface-warm">
+        <section id="collections" className="py-14 sm:py-20 lg:py-28 bg-surface-warm">
           <div className="max-w-[1264px] mx-auto px-4 sm:px-6 lg:px-8">
             <FadeInUp>
-              <h2 className="font-heading text-4xl sm:text-5xl font-normal text-foreground leading-[1.16] tracking-tight max-w-2xl">
+              <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-normal text-foreground leading-[1.16] tracking-tight max-w-2xl">
                 Your Lakeside Residence Has Arrived
               </h2>
             </FadeInUp>
@@ -130,7 +130,7 @@ export default function Home() {
                 <div className="bg-surface rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
                   <div className="relative aspect-[16/9] overflow-hidden">
                     <Image
-                      src="/images/1-front-of-house.jpg"
+                      src="/images/vineyard-collection-render.jpg"
                       alt="Vineyard Collection"
                       fill
                       className="object-cover rounded-t-2xl"
@@ -161,7 +161,7 @@ export default function Home() {
                 <div className="bg-surface rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
                   <div className="relative aspect-[16/9] overflow-hidden">
                     <Image
-                      src="/images/25-front-of-house-hero.jpg"
+                      src="/images/lake-collection-render.jpg"
                       alt="Lake Collection"
                       fill
                       className="object-cover rounded-t-2xl"
@@ -209,13 +209,13 @@ export default function Home() {
         </section>
 
         {/* HOW IT WORKS / STEPS */}
-        <section className="py-20 sm:py-28 bg-surface">
+        <section className="py-14 sm:py-20 lg:py-28 bg-surface">
           <div className="max-w-[1264px] mx-auto px-4 sm:px-6 lg:px-8">
             <FadeInUp>
               <p className="font-label text-sm font-semibold text-primary-dark uppercase tracking-widest mb-3">How It Works</p>
             </FadeInUp>
             <FadeInUp delay={100}>
-              <h2 className="font-heading text-4xl sm:text-5xl font-normal text-foreground leading-[1.16] tracking-tight max-w-xl">
+              <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-normal text-foreground leading-[1.16] tracking-tight max-w-xl">
                 Your Path to Young&apos;s Cove
               </h2>
             </FadeInUp>
@@ -248,7 +248,7 @@ export default function Home() {
                   href="#contact"
                   className="inline-flex items-center px-8 py-3.5 bg-btn hover:bg-btn-hover text-white text-sm font-semibold rounded-full transition-colors"
                 >
-                  Book Your Presentation Centre Visit
+                  Book Your Visit
                 </a>
               </div>
             </FadeInUp>
@@ -256,7 +256,7 @@ export default function Home() {
         </section>
 
         {/* LOCATION MAP */}
-        <section className="py-20 sm:py-28 bg-surface">
+        <section className="py-14 sm:py-20 lg:py-28 bg-surface">
           <div className="max-w-[1264px] mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
@@ -264,7 +264,7 @@ export default function Home() {
                   <p className="font-label text-sm font-semibold text-primary-dark uppercase tracking-widest mb-3">Location</p>
                 </FadeInUp>
                 <FadeInUp delay={100}>
-                  <h2 className="font-heading text-4xl sm:text-5xl font-normal text-foreground leading-[1.16] tracking-tight">
+                  <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-normal text-foreground leading-[1.16] tracking-tight">
                     Find Us
                   </h2>
                 </FadeInUp>
@@ -324,7 +324,7 @@ export default function Home() {
         </section>
 
         {/* CHESS BLOCK 1 — Your Backyard */}
-        <section className="py-20 sm:py-28 bg-surface-warm">
+        <section className="py-14 sm:py-20 lg:py-28 bg-surface-warm">
           <div className="max-w-[1264px] mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <FadeInUp>
@@ -343,7 +343,7 @@ export default function Home() {
                   <p className="font-label text-sm font-semibold text-primary-dark uppercase tracking-widest mb-3">The Experience</p>
                 </FadeInUp>
                 <FadeInUp delay={100}>
-                  <h2 className="font-heading text-4xl sm:text-5xl font-normal text-foreground leading-[1.16] tracking-tight">
+                  <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-normal text-foreground leading-[1.16] tracking-tight">
                     Your Backyard
                   </h2>
                 </FadeInUp>
@@ -357,7 +357,7 @@ export default function Home() {
                     href="#contact"
                     className="mt-8 inline-flex items-center px-8 py-3.5 bg-btn hover:bg-btn-hover text-white text-sm font-semibold rounded-full transition-colors"
                   >
-                    Book Your Presentation Centre Visit
+                    Book Your Visit
                   </a>
                 </FadeInUp>
               </div>
@@ -366,7 +366,7 @@ export default function Home() {
         </section>
 
         {/* CHESS BLOCK 2 — A One of a Kind Community (reversed) */}
-        <section className="py-20 sm:py-28 bg-surface">
+        <section className="py-14 sm:py-20 lg:py-28 bg-surface">
           <div className="max-w-[1264px] mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="order-2 md:order-1">
@@ -374,7 +374,7 @@ export default function Home() {
                   <p className="font-label text-sm font-semibold text-primary-dark uppercase tracking-widest mb-3">Community</p>
                 </FadeInUp>
                 <FadeInUp delay={100}>
-                  <h2 className="font-heading text-4xl sm:text-5xl font-normal text-foreground leading-[1.16] tracking-tight">
+                  <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-normal text-foreground leading-[1.16] tracking-tight">
                     A One of a Kind Community
                   </h2>
                 </FadeInUp>
@@ -388,7 +388,7 @@ export default function Home() {
                     href="#contact"
                     className="mt-8 inline-flex items-center px-8 py-3.5 bg-btn hover:bg-btn-hover text-white text-sm font-semibold rounded-full transition-colors"
                   >
-                    Book Your Presentation Centre Visit
+                    Book Your Visit
                   </a>
                 </FadeInUp>
               </div>
@@ -408,11 +408,11 @@ export default function Home() {
         </section>
 
         {/* FEATURED LISTINGS */}
-        <section id="listings" className="py-20 sm:py-28 bg-surface-warm">
+        <section id="listings" className="py-14 sm:py-20 lg:py-28 bg-surface-warm">
           <div className="max-w-[1264px] mx-auto px-4 sm:px-6 lg:px-8">
             <FadeInUp>
               <p className="font-label text-sm font-semibold text-primary-dark uppercase tracking-widest mb-3">Properties</p>
-              <h2 className="font-heading text-4xl sm:text-5xl font-normal text-foreground leading-[1.16] tracking-tight">
+              <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-normal text-foreground leading-[1.16] tracking-tight">
                 Featured Listings
               </h2>
             </FadeInUp>
@@ -500,11 +500,11 @@ export default function Home() {
         </section>
 
         {/* FAQ */}
-        <section className="py-20 sm:py-28 bg-surface-warm">
+        <section className="py-14 sm:py-20 lg:py-28 bg-surface-warm">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <FadeInUp>
               <p className="font-label text-sm font-semibold text-primary-dark uppercase tracking-widest mb-3 text-center">FAQ</p>
-              <h2 className="font-heading text-3xl sm:text-4xl font-normal text-foreground text-center tracking-tight">
+              <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-normal text-foreground text-center tracking-tight">
                 Waterfront Homes in Prince Edward County FAQ
               </h2>
             </FadeInUp>
@@ -551,10 +551,10 @@ export default function Home() {
         </section>
 
         {/* CLOSING BANNER */}
-        <section className="relative py-24 sm:py-32 overflow-hidden">
+        <section className="relative py-16 sm:py-24 lg:py-32 overflow-hidden">
           <div className="absolute inset-0">
             <Image
-              src="/images/24-arial.jpg"
+              src="/images/aerial-summer.jpg"
               alt="Young's Cove aerial"
               fill
               className="object-cover"
@@ -562,7 +562,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-black/50" />
           </div>
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-normal text-white leading-tight tracking-tight">
+            <h2 className="font-heading text-2xl sm:text-3xl lg:text-5xl font-normal text-white leading-tight tracking-tight">
               Your Corner of Lake Ontario is Closer Than You Think
             </h2>
             <a
