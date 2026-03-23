@@ -46,21 +46,44 @@ export default function Header() {
           <nav className="hidden md:flex items-center gap-8">
             {[
               { label: "Home", href: "/", isLink: true },
+              { label: "Experience", href: "/experience", isLink: true },
+              { label: "Siteplan", href: "/siteplan", isLink: true },
               { label: "Gallery", href: "/gallery", isLink: true },
-              { label: "Collections", href: "#collections", isLink: false },
-              { label: "Agents", href: "#agents", isLink: false },
-            ].map((item) => {
-              const cls = `text-sm font-medium transition-colors ${
+            ].map((item) => (
+              <Link key={item.label} href={item.href} className={`text-sm font-medium transition-colors ${
                 transparent
                   ? "text-white/90 hover:text-white"
                   : "text-foreground hover:text-btn"
-              }`;
-              return item.isLink ? (
-                <Link key={item.label} href={item.href} className={cls}>{item.label}</Link>
-              ) : (
-                <a key={item.label} href={item.href} className={cls}>{item.label}</a>
-              );
-            })}
+              }`}>{item.label}</Link>
+            ))}
+            {/* Collections dropdown */}
+            <div className="relative group">
+              <button className={`text-sm font-medium transition-colors ${
+                transparent
+                  ? "text-white/90 hover:text-white"
+                  : "text-foreground hover:text-btn"
+              }`}>
+                Collections
+                <svg className="inline w-3.5 h-3.5 ml-1 -mr-1" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                <div className="bg-white rounded-xl shadow-lg border border-border py-2 min-w-[200px]">
+                  <Link href="/collections/vineyard" className="block px-4 py-2.5 text-sm text-foreground hover:bg-surface-warm hover:text-btn transition-colors">
+                    Vineyard Collection
+                  </Link>
+                  <Link href="/collections/lake" className="block px-4 py-2.5 text-sm text-foreground hover:bg-surface-warm hover:text-btn transition-colors">
+                    Lake Collection
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <a href={isHome ? "#agents" : "/#agents"} className={`text-sm font-medium transition-colors ${
+              transparent
+                ? "text-white/90 hover:text-white"
+                : "text-foreground hover:text-btn"
+            }`}>Agents</a>
             <a
               href="#contact"
               className={`px-6 py-2.5 text-sm font-semibold rounded-full transition-colors ${
@@ -95,9 +118,15 @@ export default function Header() {
         <div className="md:hidden bg-white border-t border-border">
           <div className="px-4 py-4 space-y-1">
             <Link href="/" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-medium text-foreground rounded-lg hover:bg-surface-warm">Home</Link>
+            <Link href="/experience" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-medium text-foreground rounded-lg hover:bg-surface-warm">Experience</Link>
+            <Link href="/siteplan" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-medium text-foreground rounded-lg hover:bg-surface-warm">Siteplan</Link>
             <Link href="/gallery" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-medium text-foreground rounded-lg hover:bg-surface-warm">Gallery</Link>
-            <a href="#collections" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-medium text-foreground rounded-lg hover:bg-surface-warm">Collections</a>
-            <a href="#agents" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-medium text-foreground rounded-lg hover:bg-surface-warm">Agents</a>
+            <div className="px-4 py-2">
+              <p className="text-xs font-semibold text-muted uppercase tracking-wider">Collections</p>
+            </div>
+            <Link href="/collections/vineyard" onClick={() => setMobileOpen(false)} className="block px-4 py-3 pl-8 text-sm font-medium text-foreground rounded-lg hover:bg-surface-warm">Vineyard Collection</Link>
+            <Link href="/collections/lake" onClick={() => setMobileOpen(false)} className="block px-4 py-3 pl-8 text-sm font-medium text-foreground rounded-lg hover:bg-surface-warm">Lake Collection</Link>
+            <a href={isHome ? "#agents" : "/#agents"} onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-medium text-foreground rounded-lg hover:bg-surface-warm">Agents</a>
             <a
               href="#contact"
               onClick={() => setMobileOpen(false)}

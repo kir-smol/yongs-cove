@@ -146,12 +146,12 @@ export default function Home() {
                     <p className="mt-3 text-muted leading-relaxed">
                       These spacious homes are nestled around natural green spaces and parks. The home styles and designs have been created for families of all shapes and sizes.
                     </p>
-                    <a
-                      href="#contact"
+                    <Link
+                      href="/collections/vineyard"
                       className="mt-6 inline-flex items-center px-6 py-3 bg-btn hover:bg-btn-hover text-white text-sm font-semibold rounded-full transition-colors"
                     >
                       View Details
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </FadeInUp>
@@ -177,12 +177,12 @@ export default function Home() {
                     <p className="mt-3 text-muted leading-relaxed">
                       These luxury residences on amazing 150 foot homesites create picture perfect streetscapes with stunning lake views backing onto sandy dunes.
                     </p>
-                    <a
-                      href="#contact"
+                    <Link
+                      href="/collections/lake"
                       className="mt-6 inline-flex items-center px-6 py-3 bg-btn hover:bg-btn-hover text-white text-sm font-semibold rounded-full transition-colors"
                     >
                       View Details
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </FadeInUp>

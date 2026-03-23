@@ -4,10 +4,16 @@ import { useState, type FormEvent } from "react";
 import { trackEvent, trackPhoneClick, getLeadEventMeta } from "./FacebookPixel";
 import { SHARED_AGENTS } from "@/data/properties";
 
-export default function HomeContactForm() {
+interface HomeContactFormProps {
+  modelName?: string;
+  compact?: boolean;
+}
+
+export default function HomeContactForm({ modelName, compact }: HomeContactFormProps = {}) {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const agent = SHARED_AGENTS[0];
+  const listingLabel = modelName ? `Model Inquiry — ${modelName}` : "General Inquiry";
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,7 +24,7 @@ export default function HomeContactForm() {
     const meta = getLeadEventMeta();
 
     trackEvent("Lead", {
-      content_name: "General Inquiry",
+      content_name: listingLabel,
       content_category: "Real Estate",
       eventID: meta.eventId,
     });
@@ -29,7 +35,7 @@ export default function HomeContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...Object.fromEntries(data),
-          listing: "General Inquiry",
+          listing: listingLabel,
           eventId: meta.eventId,
           sourceUrl: meta.sourceUrl,
           fbc: meta.fbc,
@@ -48,9 +54,10 @@ export default function HomeContactForm() {
   };
 
   if (submitted) {
+    const Wrapper = compact ? "div" : "section";
     return (
-      <section id="contact" className="py-16 sm:py-20 bg-white">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <Wrapper id="contact" className={compact ? "text-center py-8" : "py-16 sm:py-20 bg-white"}>
+        <div className={compact ? "" : "max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center"}>
           <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -62,7 +69,77 @@ export default function HomeContactForm() {
             within 24 hours to assist you.
           </p>
         </div>
-      </section>
+      </Wrapper>
+    );
+  }
+
+  if (compact) {
+    return (
+      <div id="contact" className="space-y-6">
+        {/* Agent intro */}
+        <div className="flex items-center gap-4">
+          <img
+            src={agent.photo}
+            alt={agent.name}
+            className="w-14 h-14 rounded-full object-cover border-2 border-border"
+          />
+          <div>
+            <p className="font-semibold text-foreground text-sm">
+              Talk to {agent.name}
+            </p>
+            <p className="text-xs text-muted">{agent.title}, {agent.brokerage}</p>
+          </div>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="bg-background rounded-2xl border border-border p-5 sm:p-6 space-y-4">
+          <div className="grid grid-cols-2 gap-3">
+            <input type="text" name="firstName" required placeholder="First Name *" className="w-full px-3 py-2.5 rounded-lg border border-border bg-white text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors" />
+            <input type="text" name="lastName" required placeholder="Last Name *" className="w-full px-3 py-2.5 rounded-lg border border-border bg-white text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors" />
+          </div>
+          <input type="email" name="email" required placeholder="Email *" className="w-full px-3 py-2.5 rounded-lg border border-border bg-white text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors" />
+          <input type="tel" name="phone" required placeholder="Phone *" className="w-full px-3 py-2.5 rounded-lg border border-border bg-white text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors" />
+          <textarea name="message" rows={2} placeholder="Message (optional)" className="w-full px-3 py-2.5 rounded-lg border border-border bg-white text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors resize-none" />
+          <button type="submit" disabled={loading} className="w-full py-3 bg-btn hover:bg-btn-hover disabled:opacity-70 text-white font-semibold rounded-lg transition-colors text-sm">
+            {loading ? "Sending..." : `Send to ${agent.name.split(" ")[0]}`}
+          </button>
+          <p className="text-xs text-muted text-center">
+            By submitting, you agree to receive communications about our listings.
+          </p>
+        </form>
+
+        {/* Contact info block */}
+        <div className="bg-surface-warm rounded-2xl p-5 space-y-4">
+          <div className="flex items-start gap-3">
+            <svg className="w-4 h-4 text-primary-dark mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+            <div>
+              <p className="text-sm font-medium text-foreground">Call Directly</p>
+              <a href={`tel:${agent.phone}`} onClick={() => trackPhoneClick(`Call ${agent.name}`)} className="text-sm text-primary-dark hover:underline">{agent.phone}</a>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <svg className="w-4 h-4 text-primary-dark mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <div>
+              <p className="text-sm font-medium text-foreground">Presentation Centre</p>
+              <p className="text-sm text-muted">2247 County Rd 64, Quinte West, ON</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <svg className="w-4 h-4 text-primary-dark mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <p className="text-sm font-medium text-foreground">Viewing Hours</p>
+              <p className="text-sm text-muted">By appointment — 7 days a week</p>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 
